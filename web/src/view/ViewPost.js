@@ -3,31 +3,25 @@
  */
 import React from 'react';
 import {Post} from './../components/posts';
-import {connect} from 'react-redux';
-import {getPost} from './../redux-actions';
+import {fetchJson} from './../fetch-json';
 
 var ViewPost = React.createClass({
+    getInitialState: function () {
+        return {post: {}, isLoading: false};
+    },
     componentDidMount: function() {
-        this.props.getPost(this.props.params.id);
+        this.setState({isLoading: true});
+        fetchJson('/api/post/view?id=' + this.props.params.id).then(function (data) {
+            this.setState({post: data, isLoading: false})
+        }.bind(this));
     },
     render: function () {
         return (
             <section>
-                {this.props.isLoading ? '' : <Post post={this.props.post} linkToPost={false} />}
+                {this.state.isLoading ? '' : <Post post={this.state.post} linkToPost={false} />}
             </section>
         )
     }
 });
 
-var mapStateToProps = function (state) {
-    return {
-        post: state.postShow.post,
-        isLoading: state.postShow.isFetching
-    };
-};
-
-var mapDispatchToProps = {
-    getPost
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ViewPost);
+export default ViewPost;

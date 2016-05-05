@@ -5,34 +5,26 @@ import React from 'react';
 import {PostList} from './../components/posts';
 import {LoadingSpinner} from './../components/ui';
 import {Link} from 'react-router';
-import {connect} from 'react-redux';
-import {getPosts} from './../redux-actions';
+import {fetchJson} from './../fetch-json';
 
-var ConnectedPostList = React.createClass({
+var Home = React.createClass({
+    getInitialState: function () {
+        return {posts: [], isLoading: false}
+    },
     componentDidMount: function () {
-        this.props.getPosts();
+        this.setState({isLoading: true});
+        fetchJson('/api/post').then(function (data) {
+            this.setState({posts: data, isLoading: false})
+        }.bind(this))
     },
     render: function () {
         return (
             <section>
                 <Link to="/new/" className="btn btn-default">Novo Post</Link>
-                {(this.props.isLoading) ? <LoadingSpinner /> : <PostList posts={this.props.posts} />}
+                {(this.state.isLoading) ? <LoadingSpinner /> : <PostList posts={this.state.posts} />}
             </section>
         );
     }
 });
-
-var mapStateToProps = function (state) {
-    return {
-        posts: state.postList.posts,
-        isLoading: state.postList.isFetching
-    };
-};
-
-var mapDispatchToProps = {
-    getPosts
-};
-
-var Home = connect(mapStateToProps, mapDispatchToProps)(ConnectedPostList);
 
 export default Home

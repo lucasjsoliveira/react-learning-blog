@@ -68,58 +68,35 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Tags = __webpack_require__(329);
+	var _Tags = __webpack_require__(328);
 
 	var _Tags2 = _interopRequireDefault(_Tags);
 
-	var _NewPost = __webpack_require__(330);
+	var _NewPost = __webpack_require__(329);
 
 	var _NewPost2 = _interopRequireDefault(_NewPost);
 
-	var _ViewPost = __webpack_require__(332);
+	var _ViewPost = __webpack_require__(331);
 
 	var _ViewPost2 = _interopRequireDefault(_ViewPost);
 
-	var _reduxStore = __webpack_require__(333);
-
-	var _reactRedux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reactRouterRedux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-router-redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxActions = __webpack_require__(328);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, _reduxStore.store); /**
-	                                                                                                            * Created by lucas on 06/04/16.
-	                                                                                                            */
-
-
-	var homeEnter = function homeEnter() {
-	    _reduxStore.store.dispatch((0, _reduxActions.getPosts)());
-	};
-
-	var viewEnter = function viewEnter(nextState) {
-	    _reduxStore.store.dispatch((0, _reduxActions.getPost)(nextState.params.id));
-	};
-
 	_reactDom2.default.render(_react2.default.createElement(
-	    _reactRedux.Provider,
-	    { store: _reduxStore.store },
+	    _reactRouter.Router,
+	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(
-	        _reactRouter.Router,
-	        { history: history },
-	        _react2.default.createElement(
-	            _reactRouter.Route,
-	            { path: '/', component: _App2.default },
-	            _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/tags', component: _Tags2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/new', component: _NewPost2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/view/:id', component: _ViewPost2.default })
-	        )
+	        _reactRouter.Route,
+	        { path: '/', component: _App2.default },
+	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/about', component: _About2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/tags', component: _Tags2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/new', component: _NewPost2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/view/:id', component: _ViewPost2.default })
 	    )
-	), document.getElementById('app'));
+	), document.getElementById('app')); /**
+	                                     * Created by lucas on 06/04/16.
+	                                     */
 
 /***/ },
 /* 1 */
@@ -25261,22 +25238,21 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	var _reactRedux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxActions = __webpack_require__(328);
+	var _fetchJson = __webpack_require__(321);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Created by lucas on 06/04/16.
-	 */
+	var Home = _react2.default.createClass({
+	    displayName: 'Home',
 
-
-	var ConnectedPostList = _react2.default.createClass({
-	    displayName: 'ConnectedPostList',
-
+	    getInitialState: function getInitialState() {
+	        return { posts: [], isLoading: false };
+	    },
 	    componentDidMount: function componentDidMount() {
-	        this.props.getPosts();
+	        this.setState({ isLoading: true });
+	        (0, _fetchJson.fetchJson)('/api/post').then(function (data) {
+	            this.setState({ posts: data, isLoading: false });
+	        }.bind(this));
 	    },
 	    render: function render() {
 	        return _react2.default.createElement(
@@ -25287,23 +25263,13 @@
 	                { to: '/new/', className: 'btn btn-default' },
 	                'Novo Post'
 	            ),
-	            this.props.isLoading ? _react2.default.createElement(_ui.LoadingSpinner, null) : _react2.default.createElement(_posts.PostList, { posts: this.props.posts })
+	            this.state.isLoading ? _react2.default.createElement(_ui.LoadingSpinner, null) : _react2.default.createElement(_posts.PostList, { posts: this.state.posts })
 	        );
 	    }
-	});
+	}); /**
+	     * Created by lucas on 06/04/16.
+	     */
 
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        posts: state.postList.posts,
-	        isLoading: state.postList.isFetching
-	    };
-	};
-
-	var mapDispatchToProps = {
-	    getPosts: _reduxActions.getPosts
-	};
-
-	var Home = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ConnectedPostList);
 
 	exports.default = Home;
 
@@ -37633,75 +37599,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.RECIEVE_POST = exports.REQUEST_POST = exports.RECIEVE_POSTS = exports.REQUEST_POSTS = undefined;
-	exports.getPosts = getPosts;
-	exports.getPost = getPost;
-
-	var _fetchJson = __webpack_require__(321);
-
-	var REQUEST_POSTS = exports.REQUEST_POSTS = 'REQUEST_POSTS'; /**
-	                                                              * Created by lucas on 03/05/16.
-	                                                              */
-
-	var RECIEVE_POSTS = exports.RECIEVE_POSTS = 'RECIEVE_POSTS';
-
-	var REQUEST_POST = exports.REQUEST_POST = 'REQUEST_POST';
-	var RECIEVE_POST = exports.RECIEVE_POST = 'RECIEVE_POST';
-
-	function requestPosts() {
-	    return {
-	        type: REQUEST_POSTS
-	    };
-	}
-
-	function recievePosts(posts) {
-	    return {
-	        type: RECIEVE_POSTS,
-	        posts: posts
-	    };
-	}
-
-	function requestPost(id) {
-	    return {
-	        type: REQUEST_POST,
-	        id: id
-	    };
-	}
-
-	function recievePost(post) {
-	    return {
-	        type: RECIEVE_POST,
-	        post: post
-	    };
-	}
-
-	function getPosts() {
-	    return function (dispatch) {
-	        dispatch(requestPosts());
-	        (0, _fetchJson.fetchJson)('/api/post/index').then(function (data) {
-	            dispatch(recievePosts(data));
-	        });
-	    };
-	}
-
-	function getPost(id) {
-	    return function (dispatch) {
-	        dispatch(requestPost(id));
-	        (0, _fetchJson.fetchJson)('/api/post/view?id=' + id).then(function (data) {
-	            dispatch(recievePost(data));
-	        });
-	    };
-	}
-
-/***/ },
-/* 329 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
 
 	var _react = __webpack_require__(1);
 
@@ -37743,7 +37640,7 @@
 	exports.default = Tags;
 
 /***/ },
-/* 330 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37756,7 +37653,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _postForm = __webpack_require__(331);
+	var _postForm = __webpack_require__(330);
 
 	var _postForm2 = _interopRequireDefault(_postForm);
 
@@ -37777,7 +37674,7 @@
 	exports.default = NewPost;
 
 /***/ },
-/* 331 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37936,7 +37833,7 @@
 	     */
 
 /***/ },
-/* 332 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37951,108 +37848,35 @@
 
 	var _posts = __webpack_require__(220);
 
-	var _reactRedux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxActions = __webpack_require__(328);
+	var _fetchJson = __webpack_require__(321);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by lucas on 15/04/16.
-	 */
-
 
 	var ViewPost = _react2.default.createClass({
 	    displayName: 'ViewPost',
 
+	    getInitialState: function getInitialState() {
+	        return { post: {}, isLoading: false };
+	    },
 	    componentDidMount: function componentDidMount() {
-	        this.props.getPost(this.props.params.id);
+	        this.setState({ isLoading: true });
+	        (0, _fetchJson.fetchJson)('/api/post/view?id=' + this.props.params.id).then(function (data) {
+	            this.setState({ post: data, isLoading: false });
+	        }.bind(this));
 	    },
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'section',
 	            null,
-	            this.props.isLoading ? '' : _react2.default.createElement(_posts.Post, { post: this.props.post, linkToPost: false })
+	            this.state.isLoading ? '' : _react2.default.createElement(_posts.Post, { post: this.state.post, linkToPost: false })
 	        );
 	    }
-	});
-
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        post: state.postShow.post,
-	        isLoading: state.postShow.isFetching
-	    };
-	};
-
-	var mapDispatchToProps = {
-	    getPost: _reduxActions.getPost
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ViewPost);
-
-/***/ },
-/* 333 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.store = undefined;
-
-	var _redux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxActions = __webpack_require__(328);
-
-	var _reactRouterRedux = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-router-redux\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxThunk = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"redux-thunk\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by lucas on 02/05/16.
-	 */
+	}); /**
+	     * Created by lucas on 15/04/16.
+	     */
 
 
-	var postList = function postList() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { posts: [], isFetching: false } : arguments[0];
-	    var action = arguments[1];
-
-	    switch (action.type) {
-	        case _reduxActions.RECIEVE_POSTS:
-	            return Object.assign({}, state, { isFetching: false, posts: action.posts });
-	        case _reduxActions.REQUEST_POSTS:
-	            return Object.assign({}, state, { isFetching: true });
-	        default:
-	            return state;
-	    }
-	};
-
-	var postShow = function postShow() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { post: {}, isFetching: false } : arguments[0];
-	    var action = arguments[1];
-
-	    switch (action.type) {
-	        case _reduxActions.RECIEVE_POST:
-	            return Object.assign({}, state, { isFetching: false, post: action.post });
-	        case _reduxActions.REQUEST_POST:
-	            return Object.assign({}, state, { isFetching: true });
-	        default:
-	            return state;
-	    }
-	};
-
-	var appReducer = (0, _redux.combineReducers)({
-	    postList: postList,
-	    postShow: postShow,
-	    routing: _reactRouterRedux.routerReducer
-	});
-
-	var store = exports.store = (0, _redux.createStore)(appReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+	exports.default = ViewPost;
 
 /***/ }
 /******/ ]);
