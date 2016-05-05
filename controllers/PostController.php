@@ -44,6 +44,13 @@ class PostController extends Controller
             return $this->getMessageForSuccess($success);
         }
 
+        // Apagando relações antigas para recriar
+        $tags = PostTag::find()->where(['post_id' => $model->id])->all();
+        foreach ($tags as $tag) {
+            $tag->delete();
+        }
+
+        // Criando tags novas
         foreach ($tagIds as $tagId) {
             $relacao = new PostTag([
                 'post_id' => $model->id,
@@ -51,6 +58,7 @@ class PostController extends Controller
             ]);
             $relacaoResult = $relacao->save();
             if (!$relacaoResult) {
+                \Yii::trace($relacao->errors);
                 $transaction->rollBack();
                 return $this->getMessageForSuccess(false);
             }
@@ -62,7 +70,11 @@ class PostController extends Controller
 
     public function actionView($id)
     {
-        return Post::findOne($id);
+        $post = Post::findOne($id)->toArray();
+        $post['tags'] = array_map(function($tag) {
+            return $tag['id'];
+        }, $post['tags']);
+        return $post;
     }
 
 }

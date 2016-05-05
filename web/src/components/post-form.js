@@ -5,12 +5,22 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import moment from 'moment';
-import {postJson} from './../fetch-json';
+import {fetchJson, postJson} from './../fetch-json';
 import {TagSelector} from './../components/tags';
 
 export default React.createClass({
     getInitialState: function () {
         return {post: {data: moment().format('DD/MM/YYYY')}};
+    },
+    componentDidMount: function () {
+        if (!this.props.edit)
+            return;
+
+        fetchJson('/api/post/view?id=' + this.props.edit).then(function (data) {
+            var post = data;
+            post.data = (data.data.startsWith('0000')) ? null : moment(data.data).format('DD/MM/YYYY');
+            this.setState({post});
+        }.bind(this))
     },
     handlePostChange: function(prop, val) {
         var post = Object.assign({}, this.state.post);
@@ -34,9 +44,10 @@ export default React.createClass({
     },
     handleSubmit: function(e) {
         e.preventDefault();
-        var post = Object.assign({}, this.state.post);
-        post.data = moment(post.data, 'DD/MM/YYYY').format('YYYY-DD-MM');
-        postJson('/api/post/submit', this.state.post).then(function (data) {
+        var data = moment(this.state.post.data, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var post = Object.assign({}, this.state.post, {data});
+        console.log(data);
+        postJson('/api/post/submit', post).then(function (data) {
             alert(data.message);
             if (data.success)
                 browserHistory.push('/');
