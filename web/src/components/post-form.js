@@ -9,28 +9,20 @@ import {postJson} from './../fetch-json';
 import {TagSelector} from './../components/tags';
 
 export default React.createClass({
-    getInitialState: function () {
-        return {post: {data: moment().format('DD/MM/YYYY')}};
-    },
-    handlePostChange: function(prop, val) {
-        var post = Object.assign({}, this.state.post);
-        post[prop] = val;
-        this.setState({post: post});
-    },
     handleTituloChange: function(e) {
-        this.handlePostChange('titulo', e.target.value);
+        this.props.setPostProperty({titulo: e.target.value});
     },
     handleCorpoChange: function(e) {
-        this.handlePostChange('corpo', e.target.value);
+        this.props.setPostProperty({corpo: e.target.value});
     },
     handleAutorChange: function(e) {
-        this.handlePostChange('autor', e.target.value);
+        this.props.setPostProperty({autor: e.target.value});
     },
     handleDataChange: function(e) {
-        this.handlePostChange('data', e.target.value);
+        this.props.setPostProperty({data: e.target.value});
     },
     handleTagsChange: function (tagIds) {
-        this.handlePostChange('tags', tagIds);
+        this.props.setPostProperty({tags: tagIds});
     },
     handleSubmit: function(e) {
         e.preventDefault();

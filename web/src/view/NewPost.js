@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import PostForm from './../components/post-form';
+import {connect} from 'react-redux';
 
 var NewPost = React.createClass({
     render() {
@@ -11,5 +12,9 @@ var NewPost = React.createClass({
         )
     }
 });
+
+var assignDispatchToProps = {
+
+}
 
 export default NewPost
