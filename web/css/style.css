@@ -1,0 +1,23 @@
+.tag-btn {
+    background: #e0e0e0;
+    border-radius: 2px;
+    padding: 2px 6px;
+    margin-right: 5px;
+}
+
+.tag-list {
+    display: block;
+}
+
+.loadingSpinner {
+    max-width: 100px;
+}
+
+.inOut-appear {
+    opacity: 0.01;
+}
+
+.inOut-appear.example-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
