@@ -68,25 +68,25 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Tags = __webpack_require__(353);
+	var _Tags = __webpack_require__(354);
 
 	var _Tags2 = _interopRequireDefault(_Tags);
 
-	var _NewPost = __webpack_require__(354);
+	var _NewPost = __webpack_require__(355);
 
 	var _NewPost2 = _interopRequireDefault(_NewPost);
 
-	var _ViewPost = __webpack_require__(355);
+	var _ViewPost = __webpack_require__(357);
 
 	var _ViewPost2 = _interopRequireDefault(_ViewPost);
 
-	var _reduxStore = __webpack_require__(356);
+	var _reduxStore = __webpack_require__(358);
 
 	var _reactRedux = __webpack_require__(328);
 
-	var _reactRouterRedux = __webpack_require__(358);
+	var _reactRouterRedux = __webpack_require__(359);
 
-	var _reduxActions = __webpack_require__(357);
+	var _reduxActions = __webpack_require__(353);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25263,7 +25263,7 @@
 
 	var _reactRedux = __webpack_require__(328);
 
-	var _reduxActions = __webpack_require__(357);
+	var _reduxActions = __webpack_require__(353);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39342,222 +39342,36 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _fetchJson = __webpack_require__(321);
-
-	var _tags = __webpack_require__(322);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Tags = _react2.default.createClass({
-	    displayName: 'Tags',
-	    getInitialState: function getInitialState() {
-	        return { tags: [] };
-	    },
-	    componentDidMount: function componentDidMount() {
-	        (0, _fetchJson.fetchJson)('/api/tag/').then(function (data) {
-	            this.setState({ tags: data });
-	        }.bind(this));
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	                'h1',
-	                null,
-	                'Tags Cadastradas'
-	            ),
-	            _react2.default.createElement(_tags.TagList, { tags: this.state.tags })
-	        );
-	    }
-	}); /**
-	     * Created by lucas on 06/04/16.
-	     */
-
-
-	exports.default = Tags;
-
-/***/ },
-/* 354 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _postForm = __webpack_require__(364);
-
-	var _postForm2 = _interopRequireDefault(_postForm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by lucas on 14/04/16.
-	 */
-
-
-	var NewPost = _react2.default.createClass({
-	    displayName: 'NewPost',
-	    render: function render() {
-	        return _react2.default.createElement(_postForm2.default, null);
-	    }
-	});
-
-	exports.default = NewPost;
-
-/***/ },
-/* 355 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _posts = __webpack_require__(220);
-
-	var _reactRedux = __webpack_require__(328);
-
-	var _reduxActions = __webpack_require__(357);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by lucas on 15/04/16.
-	 */
-
-
-	var ViewPost = _react2.default.createClass({
-	    displayName: 'ViewPost',
-
-	    componentDidMount: function componentDidMount() {
-	        this.props.getPost(this.props.params.id);
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'section',
-	            null,
-	            this.props.isLoading ? '' : _react2.default.createElement(_posts.Post, { post: this.props.post, linkToPost: false })
-	        );
-	    }
-	});
-
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        post: state.postShow.post,
-	        isLoading: state.postShow.isFetching
-	    };
-	};
-
-	var mapDispatchToProps = {
-	    getPost: _reduxActions.getPost
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ViewPost);
-
-/***/ },
-/* 356 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.store = undefined;
-
-	var _redux = __webpack_require__(335);
-
-	var _reduxActions = __webpack_require__(357);
-
-	var _reactRouterRedux = __webpack_require__(358);
-
-	var _reduxThunk = __webpack_require__(363);
-
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Created by lucas on 02/05/16.
-	 */
-
-
-	var postList = function postList() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { posts: [], isFetching: false } : arguments[0];
-	    var action = arguments[1];
-
-	    switch (action.type) {
-	        case _reduxActions.RECIEVE_POSTS:
-	            return Object.assign({}, state, { isFetching: false, posts: action.posts });
-	        case _reduxActions.REQUEST_POSTS:
-	            return Object.assign({}, state, { isFetching: true });
-	        default:
-	            return state;
-	    }
-	};
-
-	var postShow = function postShow() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? { post: {}, isFetching: false } : arguments[0];
-	    var action = arguments[1];
-
-	    switch (action.type) {
-	        case _reduxActions.RECIEVE_POST:
-	            return Object.assign({}, state, { isFetching: false, post: action.post });
-	        case _reduxActions.REQUEST_POST:
-	            return Object.assign({}, state, { isFetching: true });
-	        default:
-	            return state;
-	    }
-	};
-
-	var appReducer = (0, _redux.combineReducers)({
-	    postList: postList,
-	    postShow: postShow,
-	    routing: _reactRouterRedux.routerReducer
-	});
-
-	var store = exports.store = (0, _redux.createStore)(appReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-
-/***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.RECIEVE_POST = exports.REQUEST_POST = exports.RECIEVE_POSTS = exports.REQUEST_POSTS = undefined;
+	exports.RECIEVE_SUBMIT_POST_RESULT = exports.SUBMIT_POST = exports.SET_POST_PROPERTIES = exports.NEW_POST = exports.RECIEVE_POST = exports.REQUEST_POST = exports.RECIEVE_POSTS = exports.REQUEST_POSTS = undefined;
 	exports.getPosts = getPosts;
 	exports.getPost = getPost;
+	exports.newPost = newPost;
+	exports.setPostProperties = setPostProperties;
+	exports.submitPost = submitPost;
+	exports.recievePostSubmitResult = recievePostSubmitResult;
+	exports.savePost = savePost;
 
 	var _fetchJson = __webpack_require__(321);
 
-	var REQUEST_POSTS = exports.REQUEST_POSTS = 'REQUEST_POSTS'; /**
-	                                                              * Created by lucas on 03/05/16.
-	                                                              */
+	var _moment = __webpack_require__(221);
 
+	var _moment2 = _interopRequireDefault(_moment);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Created by lucas on 03/05/16.
+	 */
+	var REQUEST_POSTS = exports.REQUEST_POSTS = 'REQUEST_POSTS';
 	var RECIEVE_POSTS = exports.RECIEVE_POSTS = 'RECIEVE_POSTS';
 
 	var REQUEST_POST = exports.REQUEST_POST = 'REQUEST_POST';
 	var RECIEVE_POST = exports.RECIEVE_POST = 'RECIEVE_POST';
+
+	var NEW_POST = exports.NEW_POST = 'NEW_POST';
+	var SET_POST_PROPERTIES = exports.SET_POST_PROPERTIES = 'SET_POST_PROPERTIES';
+	var SUBMIT_POST = exports.SUBMIT_POST = 'SUBMIT_POST';
+	var RECIEVE_SUBMIT_POST_RESULT = exports.RECIEVE_SUBMIT_POST_RESULT = 'RECIEVE_SUBMIT_POST_RESULT';
 
 	function requestPosts() {
 	    return {
@@ -39604,8 +39418,400 @@
 	    };
 	}
 
+	function newPost() {
+	    return {
+	        type: NEW_POST
+	    };
+	}
+
+	function setPostProperties(properties) {
+	    return {
+	        type: SET_POST_PROPERTIES,
+	        properties: properties
+	    };
+	}
+
+	function submitPost() {
+	    return {
+	        type: SUBMIT_POST
+	    };
+	}
+
+	function recievePostSubmitResult(result) {
+	    return {
+	        type: RECIEVE_SUBMIT_POST_RESULT
+	    };
+	}
+
+	function savePost() {
+	    return function (dispatch, getState) {
+	        dispatch(submitPost());
+	        var post = getState().postShow.post;
+	        (0, _fetchJson.postJson)('/api/post/');
+	    };
+	}
+
+/***/ },
+/* 354 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _fetchJson = __webpack_require__(321);
+
+	var _tags = __webpack_require__(322);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Tags = _react2.default.createClass({
+	    displayName: 'Tags',
+	    getInitialState: function getInitialState() {
+	        return { tags: [] };
+	    },
+	    componentDidMount: function componentDidMount() {
+	        (0, _fetchJson.fetchJson)('/api/tag/').then(function (data) {
+	            this.setState({ tags: data });
+	        }.bind(this));
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'section',
+	            null,
+	            _react2.default.createElement(
+	                'h1',
+	                null,
+	                'Tags Cadastradas'
+	            ),
+	            _react2.default.createElement(_tags.TagList, { tags: this.state.tags })
+	        );
+	    }
+	}); /**
+	     * Created by lucas on 06/04/16.
+	     */
+
+
+	exports.default = Tags;
+
+/***/ },
+/* 355 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _postForm = __webpack_require__(356);
+
+	var _postForm2 = _interopRequireDefault(_postForm);
+
+	var _reactRedux = __webpack_require__(328);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NewPost = _react2.default.createClass({
+	    displayName: 'NewPost',
+	    render: function render() {
+	        return _react2.default.createElement(_postForm2.default, null);
+	    }
+	}); /**
+	     * Created by lucas on 14/04/16.
+	     */
+
+
+	var assignDispatchToProps = {};
+
+	exports.default = NewPost;
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(159);
+
+	var _moment = __webpack_require__(221);
+
+	var _moment2 = _interopRequireDefault(_moment);
+
+	var _fetchJson = __webpack_require__(321);
+
+	var _tags = __webpack_require__(322);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	    displayName: 'post-form',
+
+	    handleTituloChange: function handleTituloChange(e) {
+	        this.props.setPostProperty({ titulo: e.target.value });
+	    },
+	    handleCorpoChange: function handleCorpoChange(e) {
+	        this.props.setPostProperty({ corpo: e.target.value });
+	    },
+	    handleAutorChange: function handleAutorChange(e) {
+	        this.props.setPostProperty({ autor: e.target.value });
+	    },
+	    handleDataChange: function handleDataChange(e) {
+	        this.props.setPostProperty({ data: e.target.value });
+	    },
+	    handleTagsChange: function handleTagsChange(tagIds) {
+	        this.props.setPostProperty({ tags: tagIds });
+	    },
+	    handleSubmit: function handleSubmit(e) {
+	        e.preventDefault();
+	        var post = Object.assign({}, this.state.post);
+	        post.data = (0, _moment2.default)(post.data, 'DD/MM/YYYY').format('YYYY-DD-MM');
+	        (0, _fetchJson.postJson)('/api/post/submit', this.state.post).then(function (data) {
+	            alert(data.message);
+	            if (data.success) _reactRouter.browserHistory.push('/');
+	        });
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'section',
+	            null,
+	            _react2.default.createElement(
+	                'h1',
+	                null,
+	                'Inserir novo Post'
+	            ),
+	            _react2.default.createElement(
+	                'form',
+	                { onSubmit: this.handleSubmit },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Título'
+	                    ),
+	                    _react2.default.createElement('input', { className: 'form-control', type: 'text',
+	                        value: this.state.post.titulo,
+	                        onChange: this.handleTituloChange
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Corpo'
+	                    ),
+	                    _react2.default.createElement('textarea', { className: 'form-control',
+	                        value: this.state.post.corpo,
+	                        onChange: this.handleCorpoChange })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-md-8' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                null,
+	                                'Autor'
+	                            ),
+	                            _react2.default.createElement('input', { className: 'form-control', type: 'text',
+	                                value: this.state.post.autor,
+	                                onChange: this.handleAutorChange })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-md-4' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                null,
+	                                'Data'
+	                            ),
+	                            _react2.default.createElement('input', { className: 'form-control', type: 'text',
+	                                value: this.state.post.data,
+	                                onChange: this.handleDataChange })
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-md-12' },
+	                        _react2.default.createElement(_tags.TagSelector, { onChange: this.handleTagsChange })
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'submit', className: 'btn btn-success pull-right' },
+	                        'Salvar'
+	                    )
+	                )
+	            )
+	        );
+	    }
+	}); /**
+	     * Created by lucas on 04/05/16.
+	     */
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _posts = __webpack_require__(220);
+
+	var _reactRedux = __webpack_require__(328);
+
+	var _reduxActions = __webpack_require__(353);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Created by lucas on 15/04/16.
+	 */
+
+
+	var ViewPost = _react2.default.createClass({
+	    displayName: 'ViewPost',
+
+	    componentDidMount: function componentDidMount() {
+	        this.props.getPost(this.props.params.id);
+	    },
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'section',
+	            null,
+	            this.props.isLoading ? '' : _react2.default.createElement(_posts.Post, { post: this.props.post, linkToPost: false })
+	        );
+	    }
+	});
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        post: state.postShow.post,
+	        isLoading: state.postShow.isFetching
+	    };
+	};
+
+	var mapDispatchToProps = {
+	    getPost: _reduxActions.getPost
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ViewPost);
+
 /***/ },
 /* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.store = undefined;
+
+	var _redux = __webpack_require__(335);
+
+	var _reduxActions = __webpack_require__(353);
+
+	var _reactRouterRedux = __webpack_require__(359);
+
+	var _reduxThunk = __webpack_require__(364);
+
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var postList = function postList() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { posts: [], isFetching: false } : arguments[0];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case _reduxActions.RECIEVE_POSTS:
+	            return Object.assign({}, state, { isFetching: false, posts: action.posts });
+	        case _reduxActions.REQUEST_POSTS:
+	            return Object.assign({}, state, { isFetching: true });
+	        default:
+	            return state;
+	    }
+	}; /**
+	    * Created by lucas on 02/05/16.
+	    */
+
+
+	var postShow = function postShow() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? { post: {}, isFetching: false } : arguments[0];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case _reduxActions.RECIEVE_POST:
+	            return Object.assign({}, state, { isFetching: false, post: action.post });
+	        case _reduxActions.REQUEST_POST:
+	            return Object.assign({}, state, { isFetching: true });
+	        case _reduxActions.NEW_POST:
+	            return Object.assign({}, state, { isFetching: false, post: { data: moment().format('DD/MM/YYYY') } });
+	        case _reduxActions.SET_POST_PROPERTIES:
+	            var post = Object.assign({}, state.post, action.properties);
+	            return Object.assign({}, state, { post: post });
+
+	        default:
+	            return state;
+	    }
+	};
+
+	var appReducer = (0, _redux.combineReducers)({
+	    postList: postList,
+	    postShow: postShow,
+	    routing: _reactRouterRedux.routerReducer
+	});
+
+	var store = exports.store = (0, _redux.createStore)(appReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+/***/ },
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39615,7 +39821,7 @@
 	});
 	exports.routerMiddleware = exports.routerActions = exports.goForward = exports.goBack = exports.go = exports.replace = exports.push = exports.CALL_HISTORY_METHOD = exports.routerReducer = exports.LOCATION_CHANGE = exports.syncHistoryWithStore = undefined;
 
-	var _reducer = __webpack_require__(359);
+	var _reducer = __webpack_require__(360);
 
 	Object.defineProperty(exports, 'LOCATION_CHANGE', {
 	  enumerable: true,
@@ -39630,7 +39836,7 @@
 	  }
 	});
 
-	var _actions = __webpack_require__(360);
+	var _actions = __webpack_require__(361);
 
 	Object.defineProperty(exports, 'CALL_HISTORY_METHOD', {
 	  enumerable: true,
@@ -39675,11 +39881,11 @@
 	  }
 	});
 
-	var _sync = __webpack_require__(361);
+	var _sync = __webpack_require__(362);
 
 	var _sync2 = _interopRequireDefault(_sync);
 
-	var _middleware = __webpack_require__(362);
+	var _middleware = __webpack_require__(363);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
@@ -39691,7 +39897,7 @@
 	exports.routerMiddleware = _middleware2['default'];
 
 /***/ },
-/* 359 */
+/* 360 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39743,7 +39949,7 @@
 	}
 
 /***/ },
-/* 360 */
+/* 361 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -39785,7 +39991,7 @@
 	var routerActions = exports.routerActions = { push: push, replace: replace, go: go, goBack: goBack, goForward: goForward };
 
 /***/ },
-/* 361 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39806,7 +40012,7 @@
 
 	exports['default'] = syncHistoryWithStore;
 
-	var _reducer = __webpack_require__(359);
+	var _reducer = __webpack_require__(360);
 
 	var defaultSelectLocationState = function defaultSelectLocationState(state) {
 	  return state.routing;
@@ -39944,7 +40150,7 @@
 	}
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39954,7 +40160,7 @@
 	});
 	exports['default'] = routerMiddleware;
 
-	var _actions = __webpack_require__(360);
+	var _actions = __webpack_require__(361);
 
 	function _toConsumableArray(arr) {
 	  if (Array.isArray(arr)) {
@@ -39990,7 +40196,7 @@
 	}
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -40011,165 +40217,6 @@
 	    };
 	  };
 	}
-
-/***/ },
-/* 364 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(159);
-
-	var _moment = __webpack_require__(221);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
-	var _fetchJson = __webpack_require__(321);
-
-	var _tags = __webpack_require__(322);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _react2.default.createClass({
-	    displayName: 'post-form',
-
-	    getInitialState: function getInitialState() {
-	        return { post: { data: (0, _moment2.default)().format('DD/MM/YYYY') } };
-	    },
-	    handlePostChange: function handlePostChange(prop, val) {
-	        var post = Object.assign({}, this.state.post);
-	        post[prop] = val;
-	        this.setState({ post: post });
-	    },
-	    handleTituloChange: function handleTituloChange(e) {
-	        this.handlePostChange('titulo', e.target.value);
-	    },
-	    handleCorpoChange: function handleCorpoChange(e) {
-	        this.handlePostChange('corpo', e.target.value);
-	    },
-	    handleAutorChange: function handleAutorChange(e) {
-	        this.handlePostChange('autor', e.target.value);
-	    },
-	    handleDataChange: function handleDataChange(e) {
-	        this.handlePostChange('data', e.target.value);
-	    },
-	    handleTagsChange: function handleTagsChange(tagIds) {
-	        this.handlePostChange('tags', tagIds);
-	    },
-	    handleSubmit: function handleSubmit(e) {
-	        e.preventDefault();
-	        var post = Object.assign({}, this.state.post);
-	        post.data = (0, _moment2.default)(post.data, 'DD/MM/YYYY').format('YYYY-DD-MM');
-	        (0, _fetchJson.postJson)('/api/post/submit', this.state.post).then(function (data) {
-	            alert(data.message);
-	            if (data.success) _reactRouter.browserHistory.push('/');
-	        });
-	    },
-	    render: function render() {
-	        return _react2.default.createElement(
-	            'section',
-	            null,
-	            _react2.default.createElement(
-	                'h1',
-	                null,
-	                'Inserir novo Post'
-	            ),
-	            _react2.default.createElement(
-	                'form',
-	                { onSubmit: this.handleSubmit },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'form-group' },
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Título'
-	                    ),
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'text',
-	                        value: this.state.post.titulo,
-	                        onChange: this.handleTituloChange
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'form-group' },
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Corpo'
-	                    ),
-	                    _react2.default.createElement('textarea', { className: 'form-control',
-	                        value: this.state.post.corpo,
-	                        onChange: this.handleCorpoChange })
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-8' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Autor'
-	                            ),
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text',
-	                                value: this.state.post.autor,
-	                                onChange: this.handleAutorChange })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-4' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'form-group' },
-	                            _react2.default.createElement(
-	                                'label',
-	                                null,
-	                                'Data'
-	                            ),
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text',
-	                                value: this.state.post.data,
-	                                onChange: this.handleDataChange })
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-12' },
-	                        _react2.default.createElement(_tags.TagSelector, { onChange: this.handleTagsChange })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    _react2.default.createElement(
-	                        'button',
-	                        { type: 'submit', className: 'btn btn-success pull-right' },
-	                        'Salvar'
-	                    )
-	                )
-	            )
-	        );
-	    }
-	}); /**
-	     * Created by lucas on 04/05/16.
-	     */
 
 /***/ }
 /******/ ]);
