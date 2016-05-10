@@ -19,7 +19,6 @@ var PostTitle = React.createClass({
                     {this.props.linkToPost ?  <Link to={url}>{titulo}</Link> : <span>{titulo}</span>}
                 </h1>
             </section>
-
         )
     }
 });

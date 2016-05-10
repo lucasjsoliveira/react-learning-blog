@@ -7,6 +7,7 @@ import {browserHistory} from 'react-router';
 import moment from 'moment';
 import {fetchJson, postJson} from './../fetch-json';
 import {TagSelector} from './../components/tags';
+import {notification, notificationTypes} from './notification';
 
 export default React.createClass({
     getInitialState: function () {
@@ -46,9 +47,8 @@ export default React.createClass({
         e.preventDefault();
         var data = moment(this.state.post.data, 'DD/MM/YYYY').format('YYYY-MM-DD');
         var post = Object.assign({}, this.state.post, {data});
-        console.log(data);
         postJson('/api/post/submit', post).then(function (data) {
-            alert(data.message);
+            notification.add(data.message, data.success ? notificationTypes.SUCCESS : notificationTypes.WARNING);
             if (data.success)
                 browserHistory.goBack();
         });
