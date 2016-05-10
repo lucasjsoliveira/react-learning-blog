@@ -16,7 +16,7 @@ export default React.createClass({
         if (!this.props.edit)
             return;
 
-        fetchJson('/api/post/view?id=' + this.props.edit).then(function (data) {
+        fetchJson('/api/post/edit?id=' + this.props.edit).then(function (data) {
             var post = data;
             post.data = (data.data.startsWith('0000')) ? null : moment(data.data).format('DD/MM/YYYY');
             this.setState({post});
@@ -50,7 +50,7 @@ export default React.createClass({
         postJson('/api/post/submit', post).then(function (data) {
             alert(data.message);
             if (data.success)
-                browserHistory.push('/');
+                browserHistory.goBack();
         });
     },
     render: function() {

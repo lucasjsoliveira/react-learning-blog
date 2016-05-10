@@ -68,13 +68,18 @@ class PostController extends Controller
         return $this->getMessageForSuccess($success);
     }
 
-    public function actionView($id)
+    public function actionEdit($id)
     {
         $post = Post::findOne($id)->toArray();
         $post['tags'] = array_map(function($tag) {
             return $tag['id'];
         }, $post['tags']);
         return $post;
+    }
+
+    public function actionView($id)
+    {
+        return Post::findOne($id);
     }
 
 }

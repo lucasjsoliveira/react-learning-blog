@@ -11,10 +11,15 @@ var PostTitle = React.createClass({
     render: function () {
         var titulo = this.props.post.titulo;
         var url = '/view/' + this.props.post.id;
+        var urlEdit = '/edit/' + this.props.post.id;
         return (
-            <h1>
-                {this.props.linkToPost ?  <Link to={url}>{titulo}</Link> : <span>{titulo}</span>}
-            </h1>
+            <section>
+                <Link to={urlEdit} className="pull-right ">Editar</Link>
+                <h1>
+                    {this.props.linkToPost ?  <Link to={url}>{titulo}</Link> : <span>{titulo}</span>}
+                </h1>
+            </section>
+
         )
     }
 });
@@ -34,7 +39,6 @@ var Post = React.createClass({
                 <p><small>Por: {this.props.post.autor} em {data}</small></p>
                 <p>{this.props.post.corpo}</p>
                 {taglist}
-                <hr />
             </section>
         )
     }
