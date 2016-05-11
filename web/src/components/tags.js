@@ -4,21 +4,18 @@
 import React from 'react';
 import Select2 from 'react-select2-wrapper';
 import {fetchJson} from './../fetch-json';
+import {Link} from 'react-router';
 
-var TagLink = React.createClass({
-    render() {
-        return (
-            <a className="tag-btn" href="">{this.props.tag.tag}</a>
-        )
-    }
-});
+var TagLink = (props) => (
+    <Link className="tag-btn" to={'/posts/' + props.id}>{props.tag}</Link>
+);
 
 var TagList = React.createClass({
     render () {
         return (
             <section className="tag-list">
                 {this.props.tags.map(function (tag) {
-                    return <TagLink key={tag.id} tag={tag} />
+                    return <TagLink key={tag.id} {...tag} />
                 })}
             </section>
         )

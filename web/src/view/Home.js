@@ -20,6 +20,7 @@ var Home = React.createClass({
     render: function () {
         return (
             <section>
+                <h1>Posts</h1>
                 <Link to="/new/" className="btn btn-default">Novo Post</Link>
                 {(this.state.isLoading) ? <LoadingSpinner /> : <PostList posts={this.state.posts} />}
             </section>

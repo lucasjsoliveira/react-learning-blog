@@ -11,6 +11,7 @@ import Tags from './view/Tags';
 import NewPost from './view/NewPost';
 import ViewPost from './view/ViewPost';
 import EditPost from './view/EditPost';
+import TagPosts from './view/TagPosts';
 
 ReactDOM.render((
     <Router history={browserHistory}>
@@ -21,6 +22,7 @@ ReactDOM.render((
             <Route path="/new" component={NewPost} />
             <Route path="/edit/:id" component={EditPost} />
             <Route path="/view/:id" component={ViewPost} />
+            <Route path="/posts/:tagId" component={TagPosts} />
         </Route>
     </Router>
 ), document.getElementById('app'));

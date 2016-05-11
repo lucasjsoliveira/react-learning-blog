@@ -47,7 +47,6 @@ var PostList = React.createClass({
     render: function() {
         return (
             <section>
-                <h1>Posts</h1>
                 {this.props.posts.map(function (post) {
                     return <Post post={post} key={post.id} />
                 })}

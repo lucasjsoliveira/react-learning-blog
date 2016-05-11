@@ -13,6 +13,7 @@ use app\controllers\traits\tDefaultMessage;
 use app\controllers\traits\tJsonController;
 use app\models\Post;
 use app\models\PostTag;
+use app\models\Tag;
 use yii\rest\Controller;
 
 class PostController extends Controller
@@ -66,6 +67,18 @@ class PostController extends Controller
 
         $transaction->commit();
         return $this->getMessageForSuccess($success);
+    }
+
+    public function actionGetByTag($tagId)
+    {
+        $tag = Tag::findOne($tagId);
+
+        $posts = $tag->posts;
+
+        return [
+            'tagName' => $tag->tag,
+            'posts' => $posts
+        ];
     }
 
     public function actionEdit($id)
