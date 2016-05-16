@@ -11,3 +11,16 @@ export var LoadingSpinner = () => (
         <div className="rect5"></div>
     </div>
 );
+
+export var Paginator = (props) => (
+    <div className="clearfix">
+        <div className="pull-right">
+            {props.disablePrevious
+                ? 'Anterior'
+                : <button className="btn btn-link" onClick={props.onPrevious}>Anterior</button>}
+            {props.disableNext
+                ? 'Próximo'
+                : <button className="btn btn-link" onClick={props.onNext}>Próximo</button>}
+        </div>
+    </div>
+);

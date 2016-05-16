@@ -14,15 +14,30 @@ use app\controllers\traits\tJsonController;
 use app\models\Post;
 use app\models\PostTag;
 use app\models\Tag;
+use yii\data\ActiveDataProvider;
 use yii\rest\Controller;
 
 class PostController extends Controller
 {
     use tJsonController, tDefaultMessage;
 
-    public function actionIndex()
+    public function actionIndex($page = 1)
     {
-        return Post::find()->joinWith('tags')->orderBy('data DESC')->all();
+        $query = Post::find()->joinWith('tags')->orderBy('data DESC');
+
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+                'page' => $page
+            ]
+        ]);
+
+        return [
+            'posts' => $provider->models,
+            'total' => $provider->totalCount,
+            'total_pages' => $provider->pagination->pageCount
+        ];
     }
 
     public function actionSubmit()

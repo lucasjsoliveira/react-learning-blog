@@ -2,10 +2,9 @@
  * Created by lucas on 14/04/16.
  */
 import React from 'react';
-import {Link, browserHistory} from 'react-router';
+import {Link} from 'react-router';
 import moment from 'moment';
-import {postJson} from './../fetch-json';
-import {TagSelector, TagList} from './../components/tags';
+import {TagList} from './../components/tags';
 
 var PostTitle = React.createClass({
     render: function () {
