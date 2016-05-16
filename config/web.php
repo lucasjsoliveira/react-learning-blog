@@ -40,7 +40,6 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
 
         'urlManager' => [
-            'baseUrl' => 'api',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
