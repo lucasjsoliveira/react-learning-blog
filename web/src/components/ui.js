@@ -12,15 +12,20 @@ export var LoadingSpinner = () => (
     </div>
 );
 
-export var Paginator = (props) => (
-    <div className="clearfix">
-        <div className="pull-right">
-            {props.disablePrevious
-                ? 'Anterior'
-                : <button className="btn btn-link" onClick={props.onPrevious}>Anterior</button>}
-            {props.disableNext
-                ? 'Próximo'
-                : <button className="btn btn-link" onClick={props.onNext}>Próximo</button>}
+export var Paginator = (props) => {
+    let disablePrev = props.page <= 1;
+    let disableNext = props.page >= props.maxPage;
+    return (
+        <div className="clearfix">
+            <div className="pull-right">
+                <span className="right-margin">Exibindo página {props.page} de {props.maxPage}.</span>
+                {disablePrev
+                    ? ''
+                    : <button className="btn btn-link" onClick={props.onPrevious}>Anterior</button>}
+                {disableNext
+                    ? ''
+                    : <button className="btn btn-link" onClick={props.onNext}>Próximo</button>}
+            </div>
         </div>
-    </div>
-);
+    )
+};

@@ -39,8 +39,8 @@ var Home = React.createClass({
                 <h1>Posts</h1>
                 <Link to="/new/" className="btn btn-default">Novo Post</Link>
                 <PostList posts={this.state.posts} />
-                <Paginator onNext={this.nextPage} disablePrevious={this.state.page == 1}
-                           onPrevious={this.previousPage} disableNext={this.state.page >= this.state.maxPages} />
+                <Paginator onNext={this.nextPage} onPrevious={this.previousPage}
+                           page={this.state.page} maxPage={this.state.maxPages} />
             </section>
         );
     }
