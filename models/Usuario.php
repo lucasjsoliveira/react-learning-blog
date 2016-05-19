@@ -107,7 +107,7 @@ class Usuario extends ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        throw new Exception();
+        return $this->senha;
     }
 
     /**
@@ -115,6 +115,6 @@ class Usuario extends ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        throw new Exception();
+        return $authKey == $this->senha;
     }
 }

@@ -16,7 +16,8 @@
     "react-dom": "^0.14.8",
     "react-paginate-component": "0.0.3",
     "react-router": "^2.0.1",
-    "react-select2-wrapper": "^0.6.1"
+    "react-select2-wrapper": "^0.6.1",
+    "react-tether": "^0.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",

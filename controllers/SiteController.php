@@ -22,8 +22,21 @@ class SiteController extends Controller
             return ['success' => false, 'message' => $result];
         }
 
-        Yii::$app->user->login($result);
-        return ['success' => true, 'message' => 'Login realizado com sucesso', 'usuario' => $result];
+        $result = Yii::$app->user->login($result);
+        return ['success' => $result, 'message' => 'Login realizado com sucesso', 'usuario' => $result];
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+    }
+
+    public function actionGetUser()
+    {
+        if (Yii::$app->user->isGuest)
+            return 'Usuário não logado';
+
+        return Yii::$app->user->identity;
     }
 
     public function actionSignup()

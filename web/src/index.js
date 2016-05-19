@@ -13,6 +13,9 @@ import ViewPost from './view/ViewPost';
 import EditPost from './view/EditPost';
 import TagPosts from './view/TagPosts';
 
+// Polyfill ES6
+require('es6-promise').polyfill();
+
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>

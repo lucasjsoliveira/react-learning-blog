@@ -21,3 +21,14 @@
 .right-margin {
     margin-right: 5px;
 }
+
+.authBox {
+    background: #fff;
+    border: 1px #23527c solid;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.loginForm {
+    width: 300px;
+}
