@@ -28,20 +28,15 @@ export default React.createClass({
         post[prop] = val;
         this.setState({post: post});
     },
-    handleTituloChange: function(e) {
-        this.handlePostChange('titulo', e.target.value);
+    handleTextFieldChange(fieldName) {
+        return function (e) {
+            this.handlePostChange(fieldName, e.target.value);
+        }.bind(this);
     },
-    handleCorpoChange: function(e) {
-        this.handlePostChange('corpo', e.target.value);
-    },
-    handleAutorChange: function(e) {
-        this.handlePostChange('autor', e.target.value);
-    },
-    handleDataChange: function(e) {
-        this.handlePostChange('data', e.target.value);
-    },
-    handleTagsChange: function (tagIds) {
-        this.handlePostChange('tags', tagIds);
+    handleSelect2Change(fieldName) {
+        return function (values) {
+            this.handlePostChange(fieldName, values);
+        }.bind(this);
     },
     handleSubmit: function(e) {
         e.preventDefault();
@@ -62,14 +57,20 @@ export default React.createClass({
                         <label>Título</label>
                         <input className="form-control" type="text"
                                value={this.state.post.titulo}
-                               onChange={this.handleTituloChange}
+                               onChange={this.handleTextFieldChange('titulo')}
                         />
                     </div>
                     <div className="form-group">
+                        <label>Título</label>
+                        <input className="form-control" type="text"
+                               value={this.state.post.titulo}
+                               onChange={this.handleTextFieldChange('titulo')}
+                        />
+                    </div>                    <div className="form-group">
                         <label>Corpo</label>
                         <textarea className="form-control"
                                   value={this.state.post.corpo}
-                                  onChange={this.handleCorpoChange}/>
+                                  onChange={this.handleTextFieldChange('corpo')}/>
                     </div>
                     <div className="row">
                         <div className="col-md-8">
@@ -77,7 +78,7 @@ export default React.createClass({
                                 <label>Autor</label>
                                 <input className="form-control" type="text"
                                        value={this.state.post.autor}
-                                       onChange={this.handleAutorChange}/>
+                                       onChange={this.handleTextFieldChange('autor')}/>
                             </div>
                         </div>
                         <div className="col-md-4">
@@ -85,13 +86,13 @@ export default React.createClass({
                                 <label>Data</label>
                                 <input className="form-control" type="text"
                                        value={this.state.post.data}
-                                       onChange={this.handleDataChange} />
+                                       onChange={this.handleTextFieldChange('data')} />
                             </div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <TagSelector onChange={this.handleTagsChange} />
+                            <TagSelector onChange={this.handleSelect2Change('tags')} />
                         </div>
                     </div>
                     <p><button type="submit" className="btn btn-success pull-right">Salvar</button></p>
