@@ -3,51 +3,15 @@
  */
 
 import React from 'react';
-import {browserHistory} from 'react-router';
 import moment from 'moment';
 import {fetchJson, postJson} from './../fetch-json';
 import {TagSelector} from './../components/tags';
-import {notification, notificationTypes} from './notification';
+import FormMixin from './forms';
 
 export default React.createClass({
-    getInitialState: function () {
-        return {post: {data: moment().format('DD/MM/YYYY')}};
-    },
-    componentDidMount: function () {
-        if (!this.props.edit)
-            return;
-
-        fetchJson('/api/post/edit?id=' + this.props.edit).then(function (data) {
-            var post = data;
-            post.data = (data.data.startsWith('0000')) ? null : moment(data.data).format('DD/MM/YYYY');
-            this.setState({post});
-        }.bind(this))
-    },
-    handlePostChange: function(prop, val) {
-        var post = Object.assign({}, this.state.post);
-        post[prop] = val;
-        this.setState({post: post});
-    },
-    handleTextFieldChange(fieldName) {
-        return function (e) {
-            this.handlePostChange(fieldName, e.target.value);
-        }.bind(this);
-    },
-    handleSelect2Change(fieldName) {
-        return function (values) {
-            this.handlePostChange(fieldName, values);
-        }.bind(this);
-    },
-    handleSubmit: function(e) {
-        e.preventDefault();
-        var data = moment(this.state.post.data, 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var post = Object.assign({}, this.state.post, {data});
-        postJson('/api/post/submit', post).then(function (data) {
-            notification.add(data.message, data.success ? notificationTypes.SUCCESS : notificationTypes.WARNING);
-            if (data.success)
-                browserHistory.goBack();
-        });
-    },
+    mixins: [FormMixin],
+    loadUrl: '/api/post/edit',
+    submitUrl: '/api/post/submit',
     render: function() {
         return (
             <section>
@@ -56,20 +20,20 @@ export default React.createClass({
                     <div className="form-group">
                         <label>Título</label>
                         <input className="form-control" type="text"
-                               value={this.state.post.titulo}
+                               value={this.state.model.titulo}
                                onChange={this.handleTextFieldChange('titulo')}
                         />
                     </div>
                     <div className="form-group">
                         <label>Título</label>
                         <input className="form-control" type="text"
-                               value={this.state.post.titulo}
+                               value={this.state.model.titulo}
                                onChange={this.handleTextFieldChange('titulo')}
                         />
                     </div>                    <div className="form-group">
                         <label>Corpo</label>
                         <textarea className="form-control"
-                                  value={this.state.post.corpo}
+                                  value={this.state.model.corpo}
                                   onChange={this.handleTextFieldChange('corpo')}/>
                     </div>
                     <div className="row">
@@ -77,7 +41,7 @@ export default React.createClass({
                             <div className="form-group">
                                 <label>Autor</label>
                                 <input className="form-control" type="text"
-                                       value={this.state.post.autor}
+                                       value={this.state.model.autor}
                                        onChange={this.handleTextFieldChange('autor')}/>
                             </div>
                         </div>
@@ -85,7 +49,7 @@ export default React.createClass({
                             <div className="form-group">
                                 <label>Data</label>
                                 <input className="form-control" type="text"
-                                       value={this.state.post.data}
+                                       value={this.state.model.data}
                                        onChange={this.handleTextFieldChange('data')} />
                             </div>
                         </div>
