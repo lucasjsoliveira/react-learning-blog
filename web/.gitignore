@@ -1,3 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules
-bundle.js
+app.js
+vendor.js
+manifest.js

@@ -1,8 +1,10 @@
 var webpack = require('webpack');
+var SplitByPathPlugin = require('webpack-split-by-path');
 module.exports = {
-    entry: './src/index.js',
+    entry: {app: './src/index.js'},
     output: {
-        filename: './bundle.js'
+        filename: './[name].js',
+        chunkFilename: './[name].js'
     },
     module: {
         loaders: [
@@ -18,6 +20,9 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        })
+        }),
+        new SplitByPathPlugin([
+                {name: 'vendor', path: __dirname + '/node_modules'}
+            ], [])
     ]
 };
