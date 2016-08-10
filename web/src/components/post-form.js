@@ -3,8 +3,6 @@
  */
 
 import React from 'react';
-import moment from 'moment';
-import {fetchJson, postJson} from './../fetch-json';
 import {TagSelector} from './../components/tags';
 import FormMixin from './forms';
 
@@ -13,6 +11,7 @@ export default React.createClass({
     loadUrl: '/api/post/edit',
     submitUrl: '/api/post/submit',
     render: function() {
+        var model = this.state.model;
         return (
             <section>
                 <h1>Inserir novo Post</h1>
@@ -20,20 +19,20 @@ export default React.createClass({
                     <div className="form-group">
                         <label>Título</label>
                         <input className="form-control" type="text"
-                               value={this.state.model.titulo}
+                               value={model.titulo}
                                onChange={this.handleTextFieldChange('titulo')}
                         />
                     </div>
                     <div className="form-group">
                         <label>Título</label>
                         <input className="form-control" type="text"
-                               value={this.state.model.titulo}
+                               value={model.titulo}
                                onChange={this.handleTextFieldChange('titulo')}
                         />
                     </div>                    <div className="form-group">
                         <label>Corpo</label>
                         <textarea className="form-control"
-                                  value={this.state.model.corpo}
+                                  value={model.corpo}
                                   onChange={this.handleTextFieldChange('corpo')}/>
                     </div>
                     <div className="row">
@@ -41,7 +40,7 @@ export default React.createClass({
                             <div className="form-group">
                                 <label>Autor</label>
                                 <input className="form-control" type="text"
-                                       value={this.state.model.autor}
+                                       value={model.autor}
                                        onChange={this.handleTextFieldChange('autor')}/>
                             </div>
                         </div>
@@ -49,7 +48,7 @@ export default React.createClass({
                             <div className="form-group">
                                 <label>Data</label>
                                 <input className="form-control" type="text"
-                                       value={this.state.model.data}
+                                       value={model.data}
                                        onChange={this.handleTextFieldChange('data')} />
                             </div>
                         </div>
