@@ -14,6 +14,7 @@
     "exports-loader": "^0.6.3",
     "imports-loader": "^0.6.5",
     "jquery": "^2.2.3",
+    "mobx": "^2.5.1",
     "moment": "^2.12.0",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
