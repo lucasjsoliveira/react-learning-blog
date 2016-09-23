@@ -4,9 +4,10 @@
 import React from 'react';
 import PostForm from './../components/post-form';
 import FormStore from './../components/forms';
+import postApi from './../api/post';
 import {observer} from 'mobx-react';
 
-let store = new FormStore();
+let store = new FormStore((id) => postApi.load(id), (model) => postApi.submit(model));
 
 @observer
 class NewPost extends React.Component {

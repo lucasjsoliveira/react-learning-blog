@@ -4,17 +4,10 @@
 
 import React from 'react';
 import {TagSelector} from './../components/tags';
-import postApi from './../api/post';
 import {observer} from 'mobx-react';
 
 @observer
 class PostForm extends React.Component {
-    componentDidMount() {
-        let {store} = this.props;
-
-        store.loadFn = (id) => postApi.load(id);
-        store.submitFn = (model) => postApi.submit(model);
-    }
     render() {
         let {store} = this.props;
         return (
@@ -34,12 +27,13 @@ class PostForm extends React.Component {
                                value={store.getValue('titulo')}
                                onChange={store.handleTextFieldChange('titulo')}
                         />
-                    </div>                    <div className="form-group">
-                    <label>Corpo</label>
-                    <textarea className="form-control"
-                              value={store.getValue('corpo')}
-                              onChange={store.handleTextFieldChange('corpo')}/>
-                </div>
+                    </div>
+                    <div className="form-group">
+                        <label>Corpo</label>
+                        <textarea className="form-control"
+                                  value={store.getValue('corpo')}
+                                  onChange={store.handleTextFieldChange('corpo')}/>
+                    </div>
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">

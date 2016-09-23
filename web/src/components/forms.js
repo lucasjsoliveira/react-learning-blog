@@ -13,6 +13,12 @@ class FormStore {
     @observable submitFn = null;
     @observable edit = null;
     @observable model = asMap();
+
+    constructor(loadFn, submitFn) {
+        this.loadFn = loadFn;
+        this.submitFn = submitFn;
+    }
+
     getModel() {
         return this.getState().model
     }
