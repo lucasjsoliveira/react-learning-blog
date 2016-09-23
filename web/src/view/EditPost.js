@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PostForm from './../components/post-form';
-import FormStore from './../components/forms';
+import FormStore from './../components/FormStore';
 import postApi from './../api/post';
 import {observer} from 'mobx-react';
 

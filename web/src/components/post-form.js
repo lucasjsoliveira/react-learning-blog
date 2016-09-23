@@ -5,6 +5,7 @@
 import React from 'react';
 import {TagSelector} from './../components/tags';
 import {observer} from 'mobx-react';
+import {ReactiveInput, ReactiveTextArea} from './../components/form-fields';
 
 @observer
 class PostForm extends React.Component {
@@ -16,32 +17,23 @@ class PostForm extends React.Component {
                 <form onSubmit={(e) => store.handleFormSubmit(e)}>
                     <div className="form-group">
                         <label>Título</label>
-                        <input className="form-control" type="text"
-                               value={store.getValue('titulo')}
-                               onChange={store.handleTextFieldChange('titulo')}
-                        />
+                        <ReactiveInput className="form-control" store={store} field="titulo" />
                     </div>
                     <div className="form-group">
                         <label>Corpo</label>
-                        <textarea className="form-control"
-                                  value={store.getValue('corpo')}
-                                  onChange={store.handleTextFieldChange('corpo')}/>
+                        <ReactiveTextArea className="form-control" store={store} field="corpo" />
                     </div>
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">
                                 <label>Autor</label>
-                                <input className="form-control" type="text"
-                                       value={store.getValue('autor')}
-                                       onChange={store.handleTextFieldChange('autor')}/>
+                                <ReactiveInput className="form-control" store={store} field="autor" />
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="form-group">
                                 <label>Data</label>
-                                <input className="form-control" type="text"
-                                       value={store.getValue('data')}
-                                       onChange={store.handleTextFieldChange('data')} />
+                                <ReactiveInput className="form-control" store={store} field="data"/>
                             </div>
                         </div>
                     </div>
