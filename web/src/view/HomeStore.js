@@ -3,7 +3,7 @@
  */
 
 import {observable} from 'mobx';
-import {fetchJson} from './../fetch-json';
+import postApi from './../api/post';
 class PostStore {
     @observable posts = [];
     @observable isLoading = false;
@@ -29,7 +29,7 @@ class PostStore {
     // @action
     fetchPosts() {
         this.isLoading = true;
-        fetchJson('/api/post?page='+this.page).then(function (data) {
+        postApi.index(this.page).then(function (data) {
             this.posts = data.posts;
             this.maxPages = data.total_pages - 1;
             this.isLoading = false;
