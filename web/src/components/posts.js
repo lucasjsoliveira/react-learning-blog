@@ -5,6 +5,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import moment from 'moment';
 import {TagList} from './../components/tags';
+import {observer} from 'mobx-react';
 
 var PostTitle = React.createClass({
     render: function () {
@@ -42,17 +43,19 @@ var Post = React.createClass({
     }
 });
 
-var PostList = React.createClass({
-    render: function() {
+@observer
+class PostList extends React.Component {
+    render() {
+        var {posts} = this.props.store;
         return (
             <section>
-                {this.props.posts.map(function (post) {
+                {posts.map(function (post) {
                     return <Post post={post} key={post.id} />
                 })}
             </section>
         )
     }
-});
+}
 
 export {
     PostList,

@@ -12,20 +12,28 @@ import NewPost from './view/NewPost';
 import ViewPost from './view/ViewPost';
 import EditPost from './view/EditPost';
 import TagPosts from './view/TagPosts';
+import {observer} from 'mobx-react';
 
 // Polyfill ES6
 require('es6-promise').polyfill();
 
-ReactDOM.render((
-    <Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Home}/>
-            <Route path="/about" component={About} />
-            <Route path="/tags" component={Tags} />
-            <Route path="/new" component={NewPost} />
-            <Route path="/edit/:id" component={EditPost} />
-            <Route path="/view/:id" component={ViewPost} />
-            <Route path="/posts/:tagId" component={TagPosts} />
-        </Route>
-    </Router>
-), document.getElementById('app'));
+@observer
+class AppRouter extends React.Component {
+    render() {
+        return (
+            <Router history={browserHistory}>
+                <Route path="/" component={App}>
+                    <IndexRoute component={Home}/>
+                    <Route path="/about" component={About} />
+                    <Route path="/tags" component={Tags} />
+                    <Route path="/new" component={NewPost} />
+                    <Route path="/edit/:id" component={EditPost} />
+                    <Route path="/view/:id" component={ViewPost} />
+                    <Route path="/posts/:tagId" component={TagPosts} />
+                </Route>
+            </Router>
+        )
+    }
+}
+
+ReactDOM.render(<AppRouter />, document.getElementById('app'));
