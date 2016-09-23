@@ -32,22 +32,15 @@ var TagSelector = React.createClass({
             this.setState({data: tags});
         }.bind(this))
     },
-    handleChange(e) {
-        var ids = [];
-        var els = e.target.querySelectorAll('option:checked');
-        [...els].forEach(function (el) {
-            ids.push(parseInt(el.value));
-        });
-
-        if (this.props.onChange)
-            this.props.onChange(ids);
-    },
     render() {
         var options = {
             multiple: 'multiple'
         };
+        // return (
+        //     <Select2 className="form-control" onChange={this.props.onChange} options={options} data={this.state.data} />
+        // )
         return (
-            <Select2 className="form-control" onChange={this.handleChange} options={options} data={this.state.data} />
+            <div></div>
         )
     }
 });
