@@ -3,13 +3,23 @@
  */
 import React from 'react';
 import PostForm from './../components/post-form';
+import FormStore from './../components/forms';
+import {observer} from 'mobx-react';
 
-var NewPost = React.createClass({
+let store = new FormStore();
+
+@observer
+class NewPost extends React.Component {
+    componentDidMount() {
+        var id = this.props.params.id;
+        if (id)
+            store.load(id);
+    }
     render() {
         return (
-            <PostForm edit={this.props.params.id} />
+            <PostForm store={store}/>
         )
     }
-});
+}
 
 export default NewPost

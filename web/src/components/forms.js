@@ -6,61 +6,51 @@ import React from 'react';
 import {fetchJson, postJson} from './../fetch-json';
 import {browserHistory} from 'react-router';
 import {notification, notificationTypes} from './notification';
+import {observable, extendObservable, asMap} from 'mobx';
 
-var FormMixin = {
-
-    // propTypes: {
-    //     loadUrl: React.PropTypes.string.isRequired,
-    //     submitUrl: React.PropTypes.string.isRequired,
-    //     submitOn: React.PropTypes.func.isRequired,
-    //     edit: React.PropTypes.number
-    // },
-    getInitialState: function () {
-        return {model: {}};
-    },
+class FormStore {
+    @observable loadFn = null;
+    @observable submitFn = null;
+    @observable edit = null;
+    @observable model = asMap();
     getModel() {
         return this.getState().model
-    },
+    }
     handleModelChange(prop, val) {
-        var model = Object.assign({}, this.state.model);
-        model[prop] = val;
-        this.setState({model});
-    },
+        this.model.set(prop, val);
+    }
     handleTextFieldChange(fieldName) {
         return function (e) {
             this.handleModelChange(fieldName, e.target.value);
         }.bind(this);
-    },
+    }
     handleSelect2Change(fieldName) {
         return function (values) {
             this.handleModelChange(fieldName, values);
         }.bind(this);
-    },
+    }
     load(id) {
-        fetchJson(`${this.loadUrl}?id=${id}`).then(function (data) {
-            this.setState({model: data});
+        this.loadFn(id).then(function (data) {
+            this.model = asMap(data);
         }.bind(this))
-    },
+    }
+    handleFormSubmit(e) {
+        e.preventDefault();
+
+        this.submit();
+    }
     submit() {
-        var model = this.state.model;
-        postJson(this.submitUrl, model).then(function (data) {
+        var model = this.model;
+        this.submitFn(model).then(function (data) {
             notification.add(data.message, data.success ? notificationTypes.SUCCESS : notificationTypes.WARNING);
             if (data.success)
                 browserHistory.goBack();
         });
-    },
-    componentDidMount: function () {
-        // Bind de submit ao evento passado
-        if (this.props.submitOn) {
-            this.props.submitOn(function () {
-                this.submit()
-            }.bind(this))
-        }
-
-        // Caso tenha sido definido id de registro a carregar, chamar load
-        if (this.props.edit)
-            this.load(this.props.edit);
     }
-};
+    getValue(key) {
+        let model = this.model;
+        return model.has(key) ? model.get(key) : '';
+    }
+}
 
-export default FormMixin;
+export default FormStore;
