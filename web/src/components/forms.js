@@ -31,8 +31,13 @@ class FormStore {
         }.bind(this);
     }
     handleSelect2Change(fieldName) {
-        return function (values) {
-            this.handleModelChange(fieldName, values);
+        return function (e) {
+            var ids = [];
+            var els = e.target.querySelectorAll('option:checked');
+            [...els].forEach(function (el) {
+                ids.push(parseInt(el.value));
+            });
+            this.handleModelChange(fieldName, ids);
         }.bind(this);
     }
     load(id) {

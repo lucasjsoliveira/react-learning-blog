@@ -22,13 +22,6 @@ class PostForm extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Título</label>
-                        <input className="form-control" type="text"
-                               value={store.getValue('titulo')}
-                               onChange={store.handleTextFieldChange('titulo')}
-                        />
-                    </div>
-                    <div className="form-group">
                         <label>Corpo</label>
                         <textarea className="form-control"
                                   value={store.getValue('corpo')}
@@ -54,7 +47,7 @@ class PostForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <TagSelector onChange={store.handleSelect2Change('tags')} />
+                            <TagSelector value={store.getValue('tags').slice()} onChange={store.handleSelect2Change('tags')} />
                         </div>
                     </div>
                     <p><button type="submit" className="btn btn-success pull-right">Salvar</button></p>

@@ -33,14 +33,11 @@ var TagSelector = React.createClass({
         }.bind(this))
     },
     render() {
-        var options = {
-            multiple: 'multiple'
-        };
-        // return (
-        //     <Select2 className="form-control" onChange={this.props.onChange} options={options} data={this.state.data} />
-        // )
+        let propsVal = this.props.value;
+        let val = (typeof propsVal !== 'undefined' && propsVal !== '') ? propsVal : [];
         return (
-            <div></div>
+            <Select2 multiple className="form-control" value={val}
+                     onChange={(e) => this.props.onChange(e)} data={this.state.data} />
         )
     }
 });
