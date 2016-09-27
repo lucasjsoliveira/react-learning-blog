@@ -51,7 +51,7 @@ class Select2Store {
 
     getOptions() {
         this.apiFn().then(function (data) {
-            this.options = data.map(this.mapFn);
+            this.options.replace(data.map(this.mapFn));
         }.bind(this));
     }
 }
