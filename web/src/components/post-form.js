@@ -39,7 +39,10 @@ class PostForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <TagSelector store={store} />
+                            <div className="form-group">
+                                <label>Tags</label>
+                                <TagSelector store={store} />
+                            </div>
                         </div>
                     </div>
                     <p><button type="submit" className="btn btn-success pull-right">Salvar</button></p>
