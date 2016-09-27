@@ -96,7 +96,7 @@ class PostController extends Controller
         ];
     }
 
-    public function actionEdit($id)
+    public function actionView($id)
     {
         $post = Post::findOne($id)->toArray();
         $post['tags'] = array_map(function($tag) {
@@ -104,10 +104,4 @@ class PostController extends Controller
         }, $post['tags']);
         return $post;
     }
-
-    public function actionView($id)
-    {
-        return Post::findOne($id);
-    }
-
 }

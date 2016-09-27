@@ -8,7 +8,7 @@ export default class {
     }
 
     static load(id) {
-        return fetchJson(`/api/post/edit?id=${id}`);
+        return fetchJson(`/api/post/view?id=${id}`);
     }
 
     static submit(model) {
