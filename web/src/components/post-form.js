@@ -6,11 +6,21 @@ import React from 'react';
 import {TagSelector} from './../components/tags';
 import {observer} from 'mobx-react';
 import {ReactiveInput, ReactiveTextArea} from './../components/form-fields';
+import postApi from './../api/post';
+import FormStore from './../components/FormStore';
 
-@observer
 class PostForm extends React.Component {
+    componentWillMount() {
+        this.store = new FormStore((id) => postApi.load(id), (model) => postApi.submit(model));
+    }
+    componentDidMount() {
+        var id = this.props.load;
+
+        if (id)
+            this.store.load(id);
+    }
     render() {
-        let {store} = this.props;
+        let store = this.store;
         return (
             <section>
                 <h1>Inserir novo Post</h1>
