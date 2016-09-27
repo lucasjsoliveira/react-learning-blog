@@ -3,7 +3,9 @@
  */
 
 import {observer, PropTypes} from 'mobx-react';
+import {observable} from 'mobx';
 import React from 'react';
+import Select2 from 'react-select2-wrapper';
 
 @observer
 class ReactiveInput extends React.Component {
@@ -37,9 +39,55 @@ class ReactiveTextArea extends React.Component {
     }
 }
 
+class Select2Store {
+    @observable options = [];
+    apiFn = null;
+    mapFn = null;
+
+    constructor(apiFn, mapFn) {
+        this.apiFn = apiFn;
+        this.mapFn = mapFn;
+    }
+
+    getOptions() {
+        this.apiFn().then(function (data) {
+            this.options = data.map(this.mapFn);
+        }.bind(this));
+    }
+}
+
+@observer
+class ReactiveSelect2 extends React.Component {
+    selectStore = null;
+    static propTypes = {
+        store: PropTypes.observableObject,
+        apiFn: React.PropTypes.func,
+        mapFn: React.PropTypes.func
+    };
+
+    componentWillMount() {
+        this.selectStore = new Select2Store(this.props.apiFn, this.props.mapFn);
+        this.selectStore.getOptions();
+    }
+
+    render() {
+        let props = Object.assign({}, this.props);
+        let propsVal = this.props.value;
+        props.value = (typeof propsVal !== 'undefined' && propsVal !== '') ? propsVal : [];
+        delete props.store;
+        delete props.apiFn;
+        delete props.mapFn;
+        let data = this.selectStore.options.toJS();
+        return (
+            <Select2 {...props} data={data} />
+        )
+    }
+}
+
 
 
 export {
     ReactiveInput,
-    ReactiveTextArea
+    ReactiveTextArea,
+    ReactiveSelect2
 }
