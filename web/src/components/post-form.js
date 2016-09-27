@@ -39,7 +39,7 @@ class PostForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <TagSelector value={store.getValue('tags').slice()} onChange={store.handleSelect2Change('tags')} />
+                            <TagSelector store={store} />
                         </div>
                     </div>
                     <p><button type="submit" className="btn btn-success pull-right">Salvar</button></p>

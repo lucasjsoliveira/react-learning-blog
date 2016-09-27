@@ -78,8 +78,10 @@ class ReactiveSelect2 extends React.Component {
         delete props.apiFn;
         delete props.mapFn;
         let data = this.selectStore.options.toJS();
+        let {store} = this.props;
         return (
-            <Select2 {...props} data={data} />
+            <Select2 {...props} data={data} value={store.getValue('tags').slice()}
+                     onChange={store.handleSelect2Change('tags')}/>
         )
     }
 }

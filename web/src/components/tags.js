@@ -27,8 +27,7 @@ var TagList = React.createClass({
 class TagSelector extends React.Component {
     render() {
         return (
-            <ReactiveSelect2 multiple className="form-control" value={this.props.value}
-                     onChange={(e) => this.props.onChange(e)}
+            <ReactiveSelect2 multiple className="form-control" store={this.props.store}
                      apiFn={() => tag.index()} mapFn={(e) => ({id: e.id, text: e.tag})} />
         )
     }
