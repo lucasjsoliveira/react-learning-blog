@@ -8,7 +8,7 @@ class NewPost extends React.Component {
     render() {
         var id = this.props.params.id;
         return (
-            <PostForm load={id} store={this.store}/>
+            <PostForm load={id} />
         )
     }
 }
