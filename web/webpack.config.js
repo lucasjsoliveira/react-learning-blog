@@ -5,8 +5,8 @@ module.exports = {
     // no arquivo de saída.
     entry: {app: './src/index.js'},
     output: {
-        filename: './[name].js',
-        chunkFilename: './[name].js'
+        filename: './js/[name].js',
+        chunkFilename: './js/[name].js'
     },
     module: {
         loaders: [
