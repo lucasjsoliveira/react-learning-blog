@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "antd": "^2.5.2",
     "bootstrap": "^3.3.6",
     "es6-promise": "^3.2.1",
     "exports-loader": "^0.6.3",
