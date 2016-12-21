@@ -7,7 +7,7 @@ import {LoadingSpinner} from './../components/ui';
 import {Link} from 'react-router';
 import {Paginator} from './../components/ui';
 import {observer} from 'mobx-react';
-import homeStore from './HomeStore';
+import homeStore from './PostListStore';
 
 @observer
 class Home extends React.Component {

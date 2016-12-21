@@ -4,11 +4,12 @@
 
 import {observable} from 'mobx';
 import postApi from './../api/post';
-class PostStore {
+class PostListStore {
     @observable posts = [];
     @observable isLoading = false;
     @observable page = 1;
     @observable maxPages = 1;
+    @observable tagName = null;
 
     // @action
     changePage(c) {
@@ -30,13 +31,23 @@ class PostStore {
     fetchPosts() {
         this.isLoading = true;
         postApi.index(this.page).then(function (data) {
-            this.posts = data.posts;
+            this.posts = data.models;
             this.maxPages = data.total_pages - 1;
             this.isLoading = false;
         }.bind(this))
     }
+
+    fetchPostsByTag(tagId) {
+        this.isLoading = true;
+        postApi.getByTag(tagId, this.page).then(function (data) {
+            this.posts = data.models;
+            this.maxPages = data.total_pages - 1;
+            this.isLoading = false;
+            this.tagName = data.tagName;
+        }.bind(this))
+    }
 }
 
-var homeStore = new PostStore();
+var postListStore = new PostListStore();
 
-export default homeStore;
+export default postListStore;

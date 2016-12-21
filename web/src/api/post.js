@@ -14,4 +14,8 @@ export default class {
     static submit(model) {
         return postJson('/api/post/submit', model);
     }
+
+    static getByTag(tagId, page) {
+        return fetchJson(`/api/post/get-by-tag?tagId=${tagId}&page=${page}`);
+    }
 }

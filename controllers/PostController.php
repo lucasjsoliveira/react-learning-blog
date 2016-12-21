@@ -25,19 +25,9 @@ class PostController extends Controller
     {
         $query = Post::find()->joinWith('tags')->orderBy('data DESC');
 
-        $provider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 10,
-                'page' => $page
-            ]
-        ]);
+        $provider = new DefaultDataProvider($query, $page);
 
-        return [
-            'posts' => $provider->models,
-            'total' => $provider->totalCount,
-            'total_pages' => $provider->pagination->pageCount
-        ];
+        return $provider->getResult();
     }
 
     public function actionSubmit()
@@ -84,24 +74,26 @@ class PostController extends Controller
         return $this->getMessageForSuccess($success);
     }
 
-    public function actionGetByTag($tagId)
+    public function actionGetByTag($tagId, $page = 1)
     {
         $tag = Tag::findOne($tagId);
 
-        $posts = $tag->posts;
+        $postTags = PostTag::find()->select('post_id')->where(['tag_id' => $tagId])->all();
 
-        return [
-            'tagName' => $tag->tag,
-            'posts' => $posts
-        ];
+        $ids = array_map(function ($val) {return $val->post_id; }, $postTags);
+
+        $provider = new DefaultDataProvider(Post::find()->where(['id' => $ids]), $page);
+        $result = $provider->getResult();
+        $result['tagName'] = $tag->tag;
+        return $result;
     }
 
     public function actionView($id)
     {
         $post = Post::findOne($id)->toArray();
-        $post['tags'] = array_map(function($tag) {
-            return $tag['id'];
-        }, $post['tags']);
+//        $post['tags'] = array_map(function($tag) {
+//            return $tag['id'];
+//        }, $post['tags']);
         return $post;
     }
 }
