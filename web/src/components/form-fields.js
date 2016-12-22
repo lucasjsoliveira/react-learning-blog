@@ -52,11 +52,11 @@ class ReactiveDatePicker extends React.Component {
 
         let stringValue = store.getValue(field);
 
-        let value = (stringValue) ? moment(stringValue).toDate() : null;
+        let value = (stringValue) ? moment(stringValue) : null;
 
         return (
             <div style={{display: 'block'}}>
-                <DatePicker defaultValue={value} format="DD/MM/YYYY"
+                <DatePicker value={value} format="DD/MM/YYYY"
                             onChange={store.handleValueChange(field)} className={className}/>
             </div>
         )

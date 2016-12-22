@@ -14,7 +14,7 @@ import EditPost from './view/EditPost';
 import TagPosts from './view/TagPosts';
 import {observer} from 'mobx-react';
 import {LocaleProvider} from 'antd';
-import enUS from 'antd/lib/locale-provider/pt_BR';
+import locale from 'antd/lib/locale-provider/pt_BR';
 
 // Polyfill ES6
 require('es6-promise').polyfill();
@@ -24,7 +24,7 @@ class AppRouter extends React.Component {
     render() {
         return (
             <LocaleProvider
-                locale={enUS}
+                locale={locale}
             >
                 <Router history={browserHistory}>
                     <Route path="/" component={App}>
