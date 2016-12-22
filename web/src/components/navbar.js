@@ -2,9 +2,10 @@
  * Created by lucas on 06/04/16.
  */
 import React from 'react';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 import TetherComponent from 'react-tether';
 import {authenticator} from './../athentication';
+import {Menu} from 'antd';
 
 var NavItem = React.createClass({
     render () {
@@ -79,9 +80,7 @@ var Authenticator = React.createClass({
         let {showBox} = this.state;
         return (
             <TetherComponent attachment="top right" targetAttachment="bottom right">
-                <ul className="navbar navbar-nav">
-                    <li id="authBtn" onClick={this.toggleBox}><a className="btn btn-link">Login</a></li>
-                </ul>
+                <a id="authBtn" onClick={this.toggleBox}>Login</a>
                 {showBox && <div className="authBox">
                     <LoginForm />
                 </div>}
@@ -91,24 +90,21 @@ var Authenticator = React.createClass({
 });
 
 var Navbar = React.createClass({
+    navigate(e) {
+        if (e.key == '#')
+            return;
+        browserHistory.push(e.key);
+    },
     render() {
         return (
-            <nav className="navbar navbar-inverse">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">Blog do React!</Link>
-                    </div>
-                    <ul className="nav navbar-nav">
-                        <NavItem to="/tags">Tags</NavItem>
-                        <NavItem to="/about">Sobre</NavItem>
-                    </ul>
-                    <ul className="nav navbar-nav pull-right">
-                        <li><Authenticator /></li>
-                    </ul>
-                </div>
-            </nav>
+            <Menu onClick={this.navigate} selectedKeys={[this.props.path]} mode="horizontal" theme="dark">
+                <Menu.Item key="/"><b>Blog React!</b></Menu.Item>
+                <Menu.Item key="/tags">Tags</Menu.Item>
+                <Menu.Item key="/about">Sobre</Menu.Item>
+                <Menu.Item key="#"><Authenticator /></Menu.Item>
+
+            </Menu>
         )
     }
 });
-
 export default Navbar;
