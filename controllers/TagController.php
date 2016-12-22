@@ -22,6 +22,19 @@ class TagController extends Controller
         return Tag::find()->orderBy('tag ASC')->all();
     }
 
+    public function actionListOptions()
+    {
+        /** @var Tag[] $tags */
+        $tags = self::actionIndex();
+
+        $result = [];
+        foreach ($tags as $tag) {
+            $result[$tag->id] = $tag->tag;
+        }
+
+        return $result;
+    }
+
     public function actionSubmit()
     {
         $id = \Yii::$app->request->getBodyParam('id');

@@ -19,7 +19,7 @@ class Home extends React.Component {
         return (
             <section>
                 <h1>Posts</h1>
-                <Link to="/new/" className="btn btn-default">Novo Post</Link>
+                <Link to="/new/" className="ant-btn ant-btn-primary">Novo Post</Link>
                 {store.isLoading ?
                 (<LoadingSpinner/>) :
                 (

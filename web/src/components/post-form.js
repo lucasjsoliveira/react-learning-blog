@@ -3,18 +3,33 @@
  */
 
 import React from 'react';
-import {TagSelector} from './../components/tags';
-import {observer} from 'mobx-react';
-import {ReactiveInput, ReactiveTextArea} from './../components/form-fields';
+import {ReactiveInput, ReactiveTextArea, ReactiveDatePicker, ReactiveSelect2} from './../components/form-fields';
 import postApi from './../api/post';
 import FormStore from './../components/FormStore';
+import {Button} from 'antd';
+import tag from './../api/tag';
 
 class PostForm extends React.Component {
     componentWillMount() {
         this.store = new FormStore((id) => postApi.load(id), (model) => postApi.submit(model));
     }
     componentDidMount() {
-        var id = this.props.load;
+        const id = this.props.load;
+
+        this.store.afterLoad = function (data) {
+            console.log('chamando afterLoad. Valor atual de tags', data.tags);
+            if (!data.tags)
+                return;
+
+            let newTags = [];
+
+            data.tags.forEach(function (tag) {
+                newTags[tag.id] = tag.tag;
+            });
+
+            console.log('valor novo de tags ', newTags);
+            data.tags = newTags;
+        };
 
         if (id)
             this.store.load(id);
@@ -27,23 +42,23 @@ class PostForm extends React.Component {
                 <form onSubmit={(e) => store.handleFormSubmit(e)}>
                     <div className="form-group">
                         <label>Título</label>
-                        <ReactiveInput className="form-control" store={store} field="titulo" />
+                        <ReactiveInput store={store} field="titulo" />
                     </div>
                     <div className="form-group">
                         <label>Corpo</label>
-                        <ReactiveTextArea className="form-control" store={store} field="corpo" />
+                        <ReactiveTextArea store={store} field="corpo" />
                     </div>
                     <div className="row">
                         <div className="col-md-8">
                             <div className="form-group">
                                 <label>Autor</label>
-                                <ReactiveInput className="form-control" store={store} field="autor" />
+                                <ReactiveInput store={store} field="autor" />
                             </div>
                         </div>
                         <div className="col-md-4">
                             <div className="form-group">
                                 <label>Data</label>
-                                <ReactiveInput className="form-control" store={store} field="data"/>
+                                <ReactiveDatePicker store={store} field="data"/>
                             </div>
                         </div>
                     </div>
@@ -51,11 +66,12 @@ class PostForm extends React.Component {
                         <div className="col-md-12">
                             <div className="form-group">
                                 <label>Tags</label>
-                                <TagSelector store={store} />
+                                <ReactiveSelect2 multiple store={store} field="tags"
+                                                 apiFn={() => tag.listOptions()} />
                             </div>
                         </div>
                     </div>
-                    <p><button type="submit" className="btn btn-success pull-right">Salvar</button></p>
+                    <p><Button type="primary">Salvar</Button></p>
                 </form>
             </section>
         )

@@ -12,6 +12,7 @@ class FormStore {
     @observable submitFn = null;
     @observable edit = null;
     @observable model = asMap();
+    afterLoad = null;
 
     constructor(loadFn, submitFn) {
         this.loadFn = loadFn;
@@ -29,19 +30,17 @@ class FormStore {
             this.handleModelChange(fieldName, e.target.value);
         }.bind(this);
     }
-    handleSelect2Change(fieldName) {
-        return function (e) {
-            var ids = [];
-            var els = e.target.querySelectorAll('option:checked');
-            [...els].forEach(function (el) {
-                ids.push(parseInt(el.value));
-            });
-            this.handleModelChange(fieldName, ids);
+    handleValueChange(fieldName) {
+        return function (value) {
+            this.handleModelChange(fieldName, value);
         }.bind(this);
     }
     load(id) {
         this.loadFn(id).then(function (data) {
             this.model = asMap(data);
+            if (this.afterLoad) {
+                this.afterLoad(data);
+            }
         }.bind(this))
     }
     handleFormSubmit(e) {

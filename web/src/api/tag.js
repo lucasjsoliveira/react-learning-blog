@@ -6,4 +6,8 @@ export default class {
     static index() {
         return fetchJson('/api/tag/');
     }
+
+    static listOptions() {
+        return fetchJson('/api/tag/list-options');
+    }
 }

@@ -4,8 +4,14 @@
 
 import {observer, PropTypes} from 'mobx-react';
 import {observable} from 'mobx';
+import {Input, DatePicker, Select} from 'antd';
 import React from 'react';
-import Select2 from 'react-select2-wrapper';
+import moment from 'moment';
+let Option = Select.Option;
+
+function handleDatePicker(e) {
+    console.log(e);
+}
 
 @observer
 class ReactiveInput extends React.Component {
@@ -16,8 +22,7 @@ class ReactiveInput extends React.Component {
     render() {
         let {className, store, field} = this.props;
         return (
-            <input type="text"
-                   value={store.getValue(field)} className={className}
+            <Input value={store.getValue(field)} className={className}
                    onChange={store.handleTextFieldChange(field)}
             />
         )
@@ -33,8 +38,27 @@ class ReactiveTextArea extends React.Component {
     render() {
         let {store, field, className} = this.props;
         return (
-            <textarea value={store.getValue(field)}
+            <Input type="textarea" value={store.getValue(field)}
                    onChange={store.handleTextFieldChange(field)} className={className}/>
+        )
+    }
+}
+
+@observer
+class ReactiveDatePicker extends React.Component {
+    render() {
+        let {store, field, className} = this.props;
+
+
+        let stringValue = store.getValue(field);
+
+        let value = (stringValue) ? moment(stringValue).toDate() : null;
+
+        return (
+            <div style={{display: 'block'}}>
+                <DatePicker defaultValue={value} format="DD/MM/YYYY"
+                            onChange={store.handleValueChange(field)} className={className}/>
+            </div>
         )
     }
 }
@@ -42,16 +66,24 @@ class ReactiveTextArea extends React.Component {
 class Select2Store {
     @observable options = [];
     apiFn = null;
-    mapFn = null;
 
-    constructor(apiFn, mapFn) {
+    constructor(apiFn) {
         this.apiFn = apiFn;
-        this.mapFn = mapFn;
     }
 
     getOptions() {
+
+        let mapOptions = function (val, idx) {
+            return (<Option key={idx}>val</Option>);
+        };
+
         this.apiFn().then(function (data) {
-            this.options.replace(data.map(this.mapFn));
+            let options = [];
+            Object.keys(data).forEach(function (key) {
+                let option = (<Option key={key}>{data[key]}</Option>);
+                options.push(option);
+            });
+            this.options.replace(options);
         }.bind(this));
     }
 }
@@ -61,28 +93,22 @@ class ReactiveSelect2 extends React.Component {
     selectStore = null;
     static propTypes = {
         store: PropTypes.observableObject,
-        apiFn: React.PropTypes.func,
-        mapFn: React.PropTypes.func
+        apiFn: React.PropTypes.func
     };
 
     componentWillMount() {
-        this.selectStore = new Select2Store(this.props.apiFn, this.props.mapFn);
+        this.selectStore = new Select2Store(this.props.apiFn);
         this.selectStore.getOptions();
     }
 
     render() {
-        let props = Object.assign({}, this.props);
-        let propsVal = this.props.value;
-        props.value = (typeof propsVal !== 'undefined' && propsVal !== '') ? propsVal : [];
-        delete props.store;
-        delete props.apiFn;
-        delete props.mapFn;
-        let data = this.selectStore.options.toJS();
-        let {store} = this.props;
+        let {store, field} = this.props;
         return (
-            <Select2 {...props} data={data} value={store.getValue('tags').slice()}
-                     onChange={store.handleSelect2Change('tags')}/>
-        )
+            <Select multiple style={{ width: '100%' }} placeholder="Please select"
+                    onChange={store.handleValueChange(field)}>
+                    {this.selectStore.options.slice()}
+            </Select>
+        );
     }
 }
 
@@ -91,5 +117,6 @@ class ReactiveSelect2 extends React.Component {
 export {
     ReactiveInput,
     ReactiveTextArea,
-    ReactiveSelect2
+    ReactiveSelect2,
+    ReactiveDatePicker
 }
