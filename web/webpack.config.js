@@ -1,5 +1,13 @@
 var webpack = require('webpack');
 var SplitByPathPlugin = require('webpack-split-by-path');
+
+var importOptions = [
+    {
+        "libraryName": "antd",
+        // "style": 'css',   // or 'css'
+    }
+];
+
 module.exports = {
     // Aqui você define o arquivo de "entrada" do webpack. ele vai, a partir daqui, colocar todos os imports
     // no arquivo de saída.
@@ -17,7 +25,7 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015', 'stage-1'],
-                    plugins: ['transform-decorators-legacy', 'transform-object-assign']
+                    plugins: ['transform-decorators-legacy', 'transform-object-assign', ['import', importOptions]]
                 }
             }
         ]
