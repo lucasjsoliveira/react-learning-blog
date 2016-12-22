@@ -18,8 +18,11 @@ class Home extends React.Component {
 
         return (
             <section>
-                <h1>Posts</h1>
-                <Link to="/new/" className="ant-btn ant-btn-primary">Novo Post</Link>
+                <div className="clearfix">
+                    <h1 style={{display: 'inline-block'}}>Posts</h1>
+                    <Link to="/new/" className="ant-btn ant-btn-primary pull-right new-post-btn">Novo Post</Link>
+                </div>
+
                 {store.isLoading ?
                 (<LoadingSpinner/>) :
                 (

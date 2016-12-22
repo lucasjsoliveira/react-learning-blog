@@ -1,5 +1,27 @@
-h1 {
-    margin-top: 15px;
+.pull-right {
+    /*display: inline-block;*/
+    float: right;
+}
+
+.pull-left {
+    /*display: inline-block;*/
+    float: left;
+}
+
+.edit-post-btn {
+    margin-top: 12px;
+}
+
+.new-post-btn {
+    margin-top: 5px;
+}
+
+.clearfix {
+    overflow: auto;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
 }
 
 .tag-btn {

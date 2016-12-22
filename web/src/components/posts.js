@@ -6,6 +6,7 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import {TagList} from './../components/tags';
 import {observer} from 'mobx-react';
+import {Row, Col} from 'antd';
 
 var PostTitle = React.createClass({
     render: function () {
@@ -13,8 +14,8 @@ var PostTitle = React.createClass({
         var url = '/view/' + this.props.post.id;
         var urlEdit = '/edit/' + this.props.post.id;
         return (
-            <section>
-                <Link to={urlEdit} className="pull-right ">Editar</Link>
+            <section className="clearfix">
+                <Link to={urlEdit} className="pull-right edit-post-btn">Editar</Link>
                 <h1>
                     {this.props.linkToPost ?  <Link to={url}>{titulo}</Link> : <span>{titulo}</span>}
                 </h1>
