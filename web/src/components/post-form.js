@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import {ReactiveInput, ReactiveTextArea, ReactiveDatePicker, ReactiveSelect2} from './../components/form-fields';
+import {ReactiveInput, ReactiveTextArea, ReactiveDatePicker, ReactiveSelect} from './../components/form-fields';
 import postApi from './../api/post';
 import FormStore from './../components/FormStore';
 import {Button} from 'antd';
@@ -15,22 +15,6 @@ class PostForm extends React.Component {
     }
     componentDidMount() {
         const id = this.props.load;
-
-        this.store.afterLoad = function (data) {
-            console.log('chamando afterLoad. Valor atual de tags', data.tags);
-            if (!data.tags)
-                return;
-
-            let newTags = [];
-
-            data.tags.forEach(function (tag) {
-                newTags[tag.id] = tag.tag;
-            });
-
-            console.log('valor novo de tags ', newTags);
-            data.tags = newTags;
-        };
-
         if (id)
             this.store.load(id);
     }
@@ -66,8 +50,8 @@ class PostForm extends React.Component {
                         <div className="col-md-12">
                             <div className="form-group">
                                 <label>Tags</label>
-                                <ReactiveSelect2 multiple store={store} field="tags"
-                                                 apiFn={() => tag.listOptions()} />
+                                <ReactiveSelect multiple store={store} field="tags"
+                                                apiFn={() => tag.listOptions()} />
                             </div>
                         </div>
                     </div>

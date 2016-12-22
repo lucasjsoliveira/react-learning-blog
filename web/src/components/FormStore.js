@@ -20,10 +20,11 @@ class FormStore {
     }
 
     getModel() {
-        return this.getState().model
+        return this.model
     }
     handleModelChange(prop, val) {
         this.model.set(prop, val);
+        // console.log(this.getModel().entries());
     }
     handleTextFieldChange(fieldName) {
         return function (e) {

@@ -2,11 +2,7 @@
  * Created by lucas on 14/04/16.
  */
 import React from 'react';
-import {ReactiveSelect2} from './../components/form-fields';
 import {Link} from 'react-router';
-import tag from './../api/tag';
-import {observer} from 'mobx-react';
-
 var TagLink = (props) => (
     <Link className="tag-btn" to={'/posts/' + props.id}>{props.tag}</Link>
 );

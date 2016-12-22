@@ -72,11 +72,6 @@ class Select2Store {
     }
 
     getOptions() {
-
-        let mapOptions = function (val, idx) {
-            return (<Option key={idx}>val</Option>);
-        };
-
         this.apiFn().then(function (data) {
             let options = [];
             Object.keys(data).forEach(function (key) {
@@ -89,7 +84,7 @@ class Select2Store {
 }
 
 @observer
-class ReactiveSelect2 extends React.Component {
+class ReactiveSelect extends React.Component {
     selectStore = null;
     static propTypes = {
         store: PropTypes.observableObject,
@@ -103,9 +98,17 @@ class ReactiveSelect2 extends React.Component {
 
     render() {
         let {store, field} = this.props;
+        let value = store.getValue(field).slice();
+        if (Array.isArray(value)) {
+            value = value.map((val) => String(val));
+        } else if (this.props.multiple)
+            value = null;
+
+
+        console.log(value, this.selectStore.options.slice());
         return (
-            <Select multiple style={{ width: '100%' }} placeholder="Please select"
-                    onChange={store.handleValueChange(field)}>
+            <Select style={{ width: '100%' }} placeholder="Please select" {...this.props}
+                    onChange={store.handleValueChange(field)} value={value}>
                     {this.selectStore.options.slice()}
             </Select>
         );
@@ -117,6 +120,6 @@ class ReactiveSelect2 extends React.Component {
 export {
     ReactiveInput,
     ReactiveTextArea,
-    ReactiveSelect2,
+    ReactiveSelect,
     ReactiveDatePicker
 }
