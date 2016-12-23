@@ -104,8 +104,6 @@ class ReactiveSelect extends React.Component {
         } else if (this.props.multiple)
             value = null;
 
-
-        console.log(value, this.selectStore.options.slice());
         return (
             <Select style={{ width: '100%' }} placeholder="Please select" {...this.props}
                     onChange={store.handleValueChange(field)} value={value}>

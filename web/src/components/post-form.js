@@ -55,7 +55,7 @@ class PostForm extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <p><Button type="primary">Salvar</Button></p>
+                    <p><Button type="primary" htmlType="submit">Salvar</Button></p>
                 </form>
             </section>
         )
