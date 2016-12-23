@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "build": "webpack --progress --bail"
+    "build": "webpack --bail"
   },
   "author": "",
   "license": "ISC",
@@ -36,7 +36,6 @@
     "eslint": "^3.6.1",
     "eslint-plugin-react": "^6.3.0",
     "mobx-react-devtools": "^4.2.6",
-    "webpack": "^1.12.14",
-    "webpack-split-by-path": "^0.1.0"
+    "webpack": "^1.12.14"
   }
 }
