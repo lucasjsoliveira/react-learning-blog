@@ -5,7 +5,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import {notification, notificationTypes} from './notification';
-import {observable, asMap} from 'mobx';
+import {observable, asMap, toJS} from 'mobx';
 
 class FormStore {
     @observable loadFn = null;
@@ -18,9 +18,8 @@ class FormStore {
         this.loadFn = loadFn;
         this.submitFn = submitFn;
     }
-
     getModel() {
-        return this.model
+        return toJS(this.model)
     }
     handleModelChange(prop, val) {
         this.model.set(prop, val);

@@ -9,14 +9,17 @@ import FormStore from './../components/FormStore';
 
 @observer
 class ViewPost extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         this.store = new FormStore((id)=> postAPI.load(id, true));
+    }
+    componentDidMount() {
         this.store.load(this.props.params.id);
     }
     render () {
+        let model = this.store.getModel();
         return (
             <section>
-                {this.store.isLoading ? '' : <Post post={this.store.getModel()} linkToPost={false} />}
+                {this.store.isLoading ? '' : <Post post={model} linkToPost={false} />}
             </section>
         )
     }
