@@ -88,9 +88,12 @@ class PostController extends Controller
         return $result;
     }
 
-    public function actionView($id)
+    public function actionView($id, $fullTags)
     {
         $post = Post::findOne($id)->toArray();
+        if ($fullTags)
+            return $post;
+
         $post['tags'] = array_map(function($tag) {
             return $tag['id'];
         }, $post['tags']);

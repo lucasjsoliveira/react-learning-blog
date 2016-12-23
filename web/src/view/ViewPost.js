@@ -3,25 +3,23 @@
  */
 import React from 'react';
 import {Post} from './../components/posts';
-import {fetchJson} from './../fetch-json';
+import postAPI from './../api/post';
+import {observer} from 'mobx-react';
+import FormStore from './../components/FormStore';
 
-var ViewPost = React.createClass({
-    getInitialState: function () {
-        return {post: {}, isLoading: false};
-    },
-    componentDidMount: function() {
-        this.setState({isLoading: true});
-        fetchJson('/api/post/view?id=' + this.props.params.id).then(function (data) {
-            this.setState({post: data, isLoading: false})
-        }.bind(this));
-    },
-    render: function () {
+@observer
+class ViewPost extends React.Component {
+    componentDidMount() {
+        this.store = new FormStore((id)=> postAPI.load(id, true));
+        this.store.load(this.props.params.id);
+    }
+    render () {
         return (
             <section>
-                {this.state.isLoading ? '' : <Post post={this.state.post} linkToPost={false} />}
+                {this.store.isLoading ? '' : <Post post={this.store.getModel()} linkToPost={false} />}
             </section>
         )
     }
-});
+}
 
 export default ViewPost;

@@ -7,8 +7,8 @@ export default class {
         return fetchJson(`/api/post?page=${page}`);
     }
 
-    static load(id) {
-        return fetchJson(`/api/post/view?id=${id}`);
+    static load(id, fullTags = false) {
+        return fetchJson(`/api/post/view?id=${id}&fullTags=${fullTags}`);
     }
 
     static submit(model) {
