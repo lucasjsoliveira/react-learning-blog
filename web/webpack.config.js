@@ -1,6 +1,9 @@
 var webpack = require('webpack');
 
-module.exports = {
+
+var PROD = JSON.parse(process.env.PROD_ENV || '0');
+
+let moduleExports = {
     // Aqui você define o arquivo de "entrada" do webpack. ele vai, a partir daqui, colocar todos os imports
     // no arquivo de saída.
     entry: {
@@ -24,6 +27,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         }),
-        new webpack.optimize.CommonsChunkPlugin("vendor", "./js/vendor.bundle.js")
+        new webpack.optimize.CommonsChunkPlugin("vendor", "./js/vendor.bundle.js"),
     ]
 };
+
+if (PROD)
+    moduleExports.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: { warnings: false }
+    }));
+
+module.exports = moduleExports;

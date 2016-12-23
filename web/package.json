@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "build": "webpack --bail"
+    "build": "webpack -d --bail",
+    "build-production": "PROD_ENV=1 webpack --bail"
   },
   "author": "",
   "license": "ISC",
