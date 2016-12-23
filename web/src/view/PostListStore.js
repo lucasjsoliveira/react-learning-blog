@@ -8,12 +8,19 @@ class PostListStore {
     @observable posts = [];
     @observable isLoading = false;
     @observable page = 1;
-    @observable maxPages = 1;
+    @observable count = 0;
+    @observable pageSize = 1;
     @observable tagName = null;
 
     // @action
     changePage(c) {
         this.page += c;
+        this.fetchPosts();
+    }
+
+    // @action
+    goTo(c) {
+        this.page = c;
         this.fetchPosts();
     }
 
@@ -32,7 +39,8 @@ class PostListStore {
         this.isLoading = true;
         postApi.index(this.page).then(function (data) {
             this.posts = data.models;
-            this.maxPages = data.total_pages - 1;
+            this.count = data.total;
+            this.pageSize = data.page_size;
             this.isLoading = false;
         }.bind(this))
     }

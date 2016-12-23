@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {observer} from 'mobx-react';
+import {Pagination} from 'antd';
 export var LoadingSpinner = () => (
     <div className="spinner">
         <div className="rect1"></div>
@@ -15,18 +16,12 @@ export var LoadingSpinner = () => (
 
 export var Paginator = observer((props) => {
     let {store} = props;
-    let disablePrev = store.page <= 1;
-    let disableNext = store.page >= store.maxPage;
     return (
         <div className="clearfix">
             <div className="pull-right">
-                <span className="right-margin">Exibindo página {store.page} de {store.maxPages}.</span>
-                {disablePrev
-                    ? ''
-                    : <button className="btn btn-link" onClick={() => store.previousPage()}>Anterior</button>}
-                {disableNext
-                    ? ''
-                    : <button className="btn btn-link" onClick={() => store.nextPage()}>Próximo</button>}
+                <Pagination current={store.page} pageSize={store.pageSize} defaultCurrent={1}
+                            showTotal={(total, range) => `${range[0]}-${range[1]} de ${total} registros`}
+                            total={store.count} onChange={(p) => store.goTo(p)}/>
             </div>
         </div>
     )

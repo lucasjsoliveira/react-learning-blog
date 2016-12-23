@@ -31,7 +31,7 @@ class DefaultDataProvider
         return [
             'models' => $models,
             'total' => $this->provider->totalCount,
-            'total_pages' => $this->provider->pagination->pageCount
+            'page_size' => $this->provider->pagination->pageSize
         ];
     }
 }
