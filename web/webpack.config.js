@@ -7,9 +7,8 @@ module.exports = {
         app: './src/index.js',
         vendor: [
             "es6-promise","exports-loader","imports-loader",
-            "mobx","mobx-react","moment","react","react-dom",
-            "react-paginate-component","react-router","react-tether",
-            "whatwg-fetch"
+            "mobx","mobx-react","react","react-dom",
+            "react-router","react-tether", "whatwg-fetch"
         ]
     },
     output: {

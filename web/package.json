@@ -18,7 +18,6 @@
     "moment": "^2.12.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-paginate-component": "0.0.3",
     "react-router": "^2.0.1",
     "react-tether": "^0.5.2",
     "whatwg-fetch": "^1.0.0"
